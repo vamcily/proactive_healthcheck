@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head>
+<title>Table With Embedded Line Chart</title>
+<script src="scripts/jquery-1.12.3.min.js"></script>
+<script src="scripts/d3.min.js"></script>
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<table id="datatable">
+  <thead class="tbl-header"></thead>
+  <tbody class="tbl-content"></tbody>
+</table>
+
+<script>
+
+var rows = []
+var formatdate = d3.time.format("%b %d %Y");
+
+$.ajax({
+    type: "GET",
+    url: "event/listAll?tid=emc",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (result) {
+    	
+    	$.each(result, function (i,j) {
+    		// create the table header
+    		var thead = d3.select("thead").selectAll("th")
+    		.data(d3.keys(result[0]))
+    		.enter().append("th").text(function(d){return d});
+    		// fill the table
+    		// create rows
+    		var tr = d3.select("tbody").selectAll("tr")
+    		.data(result).enter().append("tr")
+    		// cells
+    		var td = tr.selectAll("td")
+    		  .data(function(d){return d3.values(d)})
+    		  .enter().append("td")
+    		  .text(function(d) {return d})
+        });
+    },
+    error: function (msg) {
+       alert(msg);
+    }
+});
+
+</script>
+</body>
+</html>

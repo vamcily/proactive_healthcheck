@@ -1,0 +1,14 @@
+---
+applications:
+- name: proactive_healthcheck
+  memory: 1G
+  instances: 1
+  timeout: 180
+  random-route: true
+  path: target/proactive_healthcheck-0.0.1-SNAPSHOT.war
+  env:
+   JAVA_OPTS: -Dspring.profiles.active=cf 
+   NEW_RELIC_LICENSE_KEY: 26d9dc192841b601f0ef421f58d06dcc4934d44a
+   NEW_RELIC_APP_NAME: proactive_healthcheck
+  services:
+  - procheckdb

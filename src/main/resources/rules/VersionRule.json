@@ -1,0 +1,13 @@
+{
+  "id": "versionRule",
+  "name": "Version Rule",
+  "uSerivce": "healthcheck-software",
+  "stdVer": "0.1",
+  "description": "Check whether latest version",
+  "category": "software",
+  "impact": 10,
+  "applicableVersion": "4.*",
+  "applicableModel": ".*",
+  "latestVersion": "4.0.0.8888888",
+  "numOfConfidence": 1
+}
