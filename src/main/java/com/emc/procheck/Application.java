@@ -20,7 +20,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Start point of the microservice. All health check services must extends this application class.
+ * Start point of the project.
  * 
  * @author Eric Wu
  *
