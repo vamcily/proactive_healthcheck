@@ -1,0 +1,39 @@
+{
+ "name": "Total Health Score",
+ "children": [
+  {
+   "name": "Upgrading",
+   "children": [
+    {"name": "Software", "size": 80},
+    {"name": "Firmware", "size": 81}
+   ]
+  },
+  {
+   "name": "Hardware",
+   "children": [
+    {"name": "Disk", "size": 82},
+    {"name": "DAE", "size": 83},
+    {"name": "Hot Spare", "size": 84},
+    {"name": "FANs", "size": 85}
+   ]
+  },
+  {
+   "name": "Configuration",
+   "children": [
+    {"name": "LUNs", "size": 86},
+    {"name": "Pools", "size": 87},
+    {"name": "Filesystem", "size": 88},
+    {"name": "VVOL", "size": 89}
+   ]
+  },
+  {
+   "name": "Connection",
+   "children": [
+    {"name": "Host", "size": 90},
+    {"name": "Port", "size": 91},
+    {"name": "Filesystem", "size": 92},
+    {"name": "Storage Group", "size": 93}
+   ]
+  }
+ ]
+}
