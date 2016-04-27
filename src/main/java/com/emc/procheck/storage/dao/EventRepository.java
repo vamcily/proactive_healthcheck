@@ -14,5 +14,7 @@ public interface EventRepository extends TransformRepository<Event, String>{
     
     Event findOneBySystemKey(String systemKey);
     
+    List<Event> findBySerialNumber(String serialNumber);
+    
     List<Event> findByOeVersionAndOeRevision(String oeVersion, Long oeRevision);
 }
