@@ -32,6 +32,11 @@ public class EventServiceImpl extends TransformServiceImpl<Event, String> implem
     }
     
     @Override
+    public List<Event> findBySerialNumber(String serialNumber) {
+    	 return ((EventRepository)repository).findBySerialNumber(serialNumber);
+    }
+    
+    @Override
     public List<Event> findBySoftwareVersion(String version) {
         int idx = version.lastIndexOf(".");
         String oeVersion = version.substring(0, idx);
