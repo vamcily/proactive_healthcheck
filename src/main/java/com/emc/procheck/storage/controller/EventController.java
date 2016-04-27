@@ -65,15 +65,28 @@ public class EventController extends TenantController {
     }
     
     /**
+     * Get data of Event by serial number
+     * @param serialNumber
+     * @return List of Event
+     * @throws
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/event/listBySerialNumber", produces = "application/json")
+    public List<Event> getEventBySerialNumber(@RequestParam String serialNumber) {
+
+        logger.debug("Request model=/event/listBySerialNumber, serialNumber=" + serialNumber);
+        return eventService.findBySerialNumber(serialNumber);
+    }
+    
+    /**
      * Get data of Event by software version
      * @param softwareVersion
      * @return List of Event
      * @throws
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/event/list", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "/event/listByVersion", produces = "application/json")
     public List<Event> getEventBySoftwareVersion(@RequestParam String softwareVersion) {
 
-        logger.debug("Request model=/event/list, softwareVersion=" + softwareVersion);
+        logger.debug("Request model=/event/listByVersion, softwareVersion=" + softwareVersion);
         return eventService.findBySoftwareVersion(softwareVersion);
     }
 }

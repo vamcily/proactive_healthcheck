@@ -22,7 +22,7 @@ var formatdate = d3.time.format("%b %d %Y");
 
 $.ajax({
     type: "GET",
-    url: "event/listAll?tid=emc",
+    url: "event/listBySerialNumber?serialNumber=APM00142009599&tid=emc",
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: function (result) {

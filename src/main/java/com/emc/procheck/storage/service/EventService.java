@@ -15,6 +15,8 @@ public interface EventService extends TransformService<Event, String> {
 	
 	public Event findBySystemKey(String systemKey);
 	
+	public List<Event> findBySerialNumber(String serialNumber);
+	
 	public List<Event> findBySoftwareVersion(String version);
 
 }
