@@ -35,11 +35,13 @@ path.link {
             <th>Items</th>
             <th>Problem</th>
             <th>Recommanded Action</th>
+            <th>Detailed Report</th>
           </tr>
           <tr>
             <td>1</td> 
             <td>The software version is too old</td>
             <td>Upgrade software to latest version</td>
+            <td style="text-align:center"><u>Detail</u></td>
           </tr>
         </table>
 
@@ -129,7 +131,7 @@ function update(source) {
   // Transition nodes to their new position.
   var nodeUpdate = node.transition()
       .duration(duration)
-      .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+      .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });  //dingj2 交换xy可以转向
 
   nodeUpdate.select("circle")
       .attr("r", 10)  // dingj2 圆圈半径 .attr("r", 4.5)
