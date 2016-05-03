@@ -23,7 +23,7 @@ public class EventServiceImpl extends TransformServiceImpl<Event, String> implem
 
     @Override
     public Event findLatestBySerialNumber(String serialNumber) {
-        return ((EventRepository)repository).findTopBySerialNumberOrderByTimeDesc(serialNumber);
+        return ((EventRepository)repository).findTopBySerialNumberOrderBySystemKeyDesc(serialNumber);
     }
     
     @Override

@@ -12,5 +12,7 @@ public interface UemSystemService extends TransformService<UemSystem, String> {
 	public List<UemSystem> findAll();
 	
 	public List<UemSystem> findByVersion(String version);
+	
+	public UemSystem findBySystemKey(String systemKey);
 
 }

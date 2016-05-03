@@ -10,7 +10,7 @@ import com.emc.procheck.storage.model.Event;
  */
 public interface EventRepository extends TransformRepository<Event, String>{
 
-    Event findTopBySerialNumberOrderByTimeDesc(String serialNumber);
+    Event findTopBySerialNumberOrderBySystemKeyDesc(String serialNumber);
     
     Event findOneBySystemKey(String systemKey);
     

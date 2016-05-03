@@ -26,4 +26,8 @@ public class UemSystemServiceImpl extends TransformServiceImpl<UemSystem, String
 		return  ((UemSystemRepository)repository).findByVersion(version);
 	}
 
+	@Override
+	public UemSystem findBySystemKey(String systemKey) {
+		return  ((UemSystemRepository)repository).findBySystemKey(systemKey);
+	}
 }
