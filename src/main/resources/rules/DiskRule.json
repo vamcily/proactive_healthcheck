@@ -1,11 +1,9 @@
 {
   "id": "diskRule",
   "name": "Disk Rule",
-  "uSerivce": "healthcheck-hardware",
-  "stdVer": "0.1",
   "description": "Check Disk Health",
   "category": "hardware",
-  "impact": 20,
-  "applicableVersion": "4.*",
+  "weight": 0.3,
+  "applicableVersion": "3.*",
   "applicableModel": ".*"  
 }

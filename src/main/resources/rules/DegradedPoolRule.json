@@ -1,13 +1,9 @@
 {
   "id": "degradedPoolRule",
   "name": "Degraded Pool Rule",
-  "uSerivce": "healthcheck-pools",
-  "stdVer": "0.1",
   "description": "Check for degraded pools",
   "category": "storage",
-  "impact": 151,
-  "applicableVersion": "4.*",
-  "applicableModel": ".*",
-  "impactFormula": "(x-0.01) * 655.56 + 151",
-  "minImpactedRatio": 0.01
+  "weight": 0.2,
+  "applicableVersion": "3.*",
+  "applicableModel": ".*"
 }

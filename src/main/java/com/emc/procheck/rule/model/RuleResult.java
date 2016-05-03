@@ -3,8 +3,9 @@
  */
 package com.emc.procheck.rule.model;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
@@ -25,7 +26,15 @@ public class RuleResult {
     private Date startTime;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date endTime;
-    private HashMap<String, HealthPacket> healthPacketMap = new HashMap<String, HealthPacket>();
+    
+    private int score; 
+    private double weight; 
+    private String component;
+    private List<String> actions;
+    
+    public RuleResult() {
+    	actions = new ArrayList<String>();
+    }
     
     public RuleStatus getStatus() {
         return status;
@@ -50,20 +59,44 @@ public class RuleResult {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
-
-    public void addHealthPacket(String key, HealthPacket packet) {
-        healthPacketMap.put(key, packet);
-    }
     
-    public HashMap<String, HealthPacket> getHealthPacketMap() {
-        return healthPacketMap;
-    }
-    
-    public HealthPacket getHealthPacket(String key) {
-        return healthPacketMap.get(key);
-    }
+    public int getScore() {
+		return score;
+	}
 
-    @Override
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+	public String getComponent() {
+		return component;
+	}
+
+	public void setComponent(String component) {
+		this.component = component;
+	}
+	
+	public List<String> getActions() {
+		return actions;
+	}
+	
+	public void setActions(List<String> actions) {
+		this.actions = actions;
+	}
+
+	public void addAction(String action) {
+		actions.add(action);
+	}
+
+	@Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }

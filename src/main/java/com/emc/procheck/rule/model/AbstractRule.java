@@ -4,19 +4,16 @@
 package com.emc.procheck.rule.model;
 
 import java.util.Date;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 
-import com.emc.procheck.config.CommonHealthCheckConfig;
 import com.emc.procheck.rule.model.RuleResult.RuleStatus;
-import com.emc.procheck.storage.model.Event;
-import com.emc.procheck.storage.service.EventService;
+import com.emc.procheck.storage.model.UemSystem;
+import com.emc.procheck.storage.service.UemSystemService;
 import com.emc.procheck.util.ApplicationContextUtil;
 
 /**
@@ -27,18 +24,16 @@ public abstract class AbstractRule implements IRule, Cloneable {
 
 	private String id;
 	private String name;
-	private String uSerivce;
-	private String stdVer;
 	private String description;
 	private String category;
-	protected int impact;
+	private double weight;
 	protected String applicableVersion;
 	protected String applicableModel;
 	protected RuleResult result;
 	
-	private HealthPacket basicPacketInfo;
-
-	protected Event event;
+	protected UemSystem system;
+	
+	protected static final int MAX_SCORE = 100;
 
 	private final static Logger logger = LoggerFactory.getLogger(AbstractRule.class);
 
@@ -50,23 +45,7 @@ public abstract class AbstractRule implements IRule, Cloneable {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	public String getStdVer() {
-		return stdVer;
-	}
-
-	public void setStdVer(String stdVer) {
-		this.stdVer = stdVer;
-	}
-
-	public String getuSerivce() {
-		return uSerivce;
-	}
-
-	public void setuSerivce(String uSerivce) {
-		this.uSerivce = uSerivce;
-	}
-
+	
 	@Override
 	public String getName() {
 		return name;
@@ -94,12 +73,12 @@ public abstract class AbstractRule implements IRule, Cloneable {
 	}
 
 	@Override
-	public int getImpact() {
-        return impact;
-    }
-	
-	public void setImpact(int impact) {
-		this.impact = impact;
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
 	}
 
 	public void setApplicableVersion(String applicableVersion) {
@@ -120,57 +99,23 @@ public abstract class AbstractRule implements IRule, Cloneable {
 
 		result = new RuleResult();
 
-		EventService service = (EventService) ApplicationContextUtil.getBean(EventService.BEANNAME);
-		event = service.findBySystemKey(systemKey);
-		if (event == null) {
-			logger.error("Could not find the event object with systemKey " + systemKey);
+		UemSystemService service = (UemSystemService) ApplicationContextUtil.getBean(UemSystemService.BEANNAME);
+		system = service.findBySystemKey(systemKey);
+		if (system == null) {
+			logger.error("Could not find the system object with systemKey " + systemKey);
 			result.setStatus(RuleStatus.NOT_APPLICABLE);
 			return;
 		}
 
-		// This is an example of common check whether rule is applicable on
-		// target system.
-		// It could be removed if not needed.
-//		if (!checkIfApplicable(systemKey)) {
-//			result.setStatus(RuleStatus.NOT_APPLICABLE);
-//			return;
-//		}
+		if (!checkIfApplicable(systemKey)) {
+			result.setStatus(RuleStatus.NOT_APPLICABLE);
+			return;
+		}
 
 		result.setStartTime(new Date());
 		result.setStatus(RuleStatus.RUNNING);
-
-		basicPacketInfo = new HealthPacket();
-		basicPacketInfo.setuService(uSerivce);
-		basicPacketInfo.setStdVer(stdVer);
-		basicPacketInfo.setSerialNo(event.getSerialNumber());
-		basicPacketInfo.setSourceDataCreation(event.getTime());
-
-		CommonHealthCheckConfig hcConfig = (CommonHealthCheckConfig) ApplicationContextUtil
-				.getBean(CommonHealthCheckConfig.BEANNAME);
-		basicPacketInfo.setPacketVer(hcConfig.getPacketVersion());
-
-		execute(systemKey);
-
-	}
-	
-	@Override
-	public void checkWithoutTenant(String sn, String systemKey) {
-
-		result = new RuleResult();
-		result.setStartTime(new Date());
-		result.setStatus(RuleStatus.RUNNING);
-
-		HealthPacket packet = new HealthPacket();
-		packet.setId(UUID.randomUUID().toString());
-		packet.setCreated(new Date());
-		packet.setuService(uSerivce);
-		packet.setStdVer(stdVer);
-		packet.setSerialNo(sn);
-
-		CommonHealthCheckConfig hcConfig = (CommonHealthCheckConfig) ApplicationContextUtil
-				.getBean(CommonHealthCheckConfig.BEANNAME);
-		packet.setPacketVer(hcConfig.getPacketVersion());
-
+		result.setWeight(weight);
+		
 		execute(systemKey);
 
 	}
@@ -181,17 +126,17 @@ public abstract class AbstractRule implements IRule, Cloneable {
 	}
 
 	private boolean checkIfApplicable(String systemKey) {
-		if (event.getOeVersion() == null || event.getOeRevision() == null) {
-			logger.warn("Version or revision is null for " + systemKey);
+		if (system.getVersion() == null) {
+			logger.warn("Version is null for " + systemKey);
 			return false;
 		}
 
-		if (event.getModel() == null) {
+		if (system.getModel() == null) {
 			logger.warn("Model is null for " + systemKey);
 			return false;
 		}
 
-		String systemVersion = event.getOeVersion() + "." + event.getOeRevision();
+		String systemVersion = system.getVersion();
 
 		Pattern pattern = Pattern.compile(applicableVersion);
 		Matcher matcher = pattern.matcher(systemVersion);
@@ -203,7 +148,7 @@ public abstract class AbstractRule implements IRule, Cloneable {
 		}
 
 		pattern = Pattern.compile(applicableModel);
-		String systemModel = event.getModel();
+		String systemModel = system.getModel();
 		matcher = pattern.matcher(systemModel);
 		if (!matcher.matches()) {
 			logger.info("The rule " + name + " could not be applied to " + systemKey + ". System model " + systemModel
@@ -214,15 +159,6 @@ public abstract class AbstractRule implements IRule, Cloneable {
 		return true;
 	}
 	
-	protected HealthPacket createHealthPacket() {
-	    HealthPacket packet = new HealthPacket();
-	    BeanUtils.copyProperties(basicPacketInfo, packet, HealthPacket.class);
-	    packet.setId(UUID.randomUUID().toString());
-        packet.setCreated(new Date());
-        
-        return packet;
-	}
-
 	/**
 	 * Concrete rule should implement this method with the actual rule logic.
 	 * 
@@ -235,23 +171,5 @@ public abstract class AbstractRule implements IRule, Cloneable {
     public Object clone() throws CloneNotSupportedException {  
         return super.clone();  
     }  
-	
-	/**
-	 * Get default impact. For example, use it when failing to calculate impact by formula.
-	 * @return
-	 */
-	protected int getDefaultImpact(){
-		return this.getImpact();
-	}
-	
-	/**
-	 * If the impact is calculated by comparing it with default impact.
-	 * @param impact
-	 * @return
-	 */
-	protected boolean isDefaultImapct(int impact){
-		return this.getDefaultImpact() == impact;
-	}
-
 
 }

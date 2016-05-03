@@ -1,22 +1,18 @@
 package com.emc.procheck.rule.model.rules;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.emc.procheck.rule.model.FormulaRule;
-import com.emc.procheck.rule.model.HealthPacket;
+import com.emc.procheck.rule.model.AbstractRule;
 import com.emc.procheck.rule.model.RuleResult.RuleStatus;
 import com.emc.procheck.storage.model.UemPool;
 import com.emc.procheck.storage.service.UemPoolService;
 import com.emc.procheck.util.ApplicationContextUtil;
 
-public class DegradedPoolRule extends FormulaRule {
+public class DegradedPoolRule extends AbstractRule {
     
     private final static Logger logger = LoggerFactory.getLogger(DegradedPoolRule.class);
     
@@ -30,13 +26,13 @@ public class DegradedPoolRule extends FormulaRule {
         for (UemPool pool: pools) {
             totalSize += pool.getSizeTotal();
         }
+        
+        int score = MAX_SCORE;
+        
         for (UemPool pool: pools) {
-            Map<String, String> rawData = new HashMap<String, String>();
-            HealthPacket packet = createHealthPacket();
             if ("OK".equalsIgnoreCase(pool.getHealthValue()) 
                     || "OK_BUT".equalsIgnoreCase(pool.getHealthValue())) {
-                packet.setImpact(0);
-                result.addHealthPacket(pool.getPoolKey(), packet);
+            	logger.debug("Pool is in good health: " + pool.getPoolKey());
                 continue;
             }
             failed = true;
@@ -46,18 +42,13 @@ public class DegradedPoolRule extends FormulaRule {
             if (pool.getName() != null && !pool.getName().isEmpty()) {
                 poolId += "(" + pool.getName() + ")";
             }
-            rawData.put(poolId, pool.getHealthValue());
-            packet.setDescription("Pool " + poolId + " is in unhealthy state (" + pool.getHealthValue() + ")");
-            List<String> resolution = new ArrayList<String>();
-            resolution.add("Check whether it's because of hardware failure. If it is, contact your service provider to order and replace the faulted haredware.");
-            packet.setRemediation(resolution);
                 
-            int calculatedImpact = calculateImpact(degradedPercent);
-            packet.setImpact(calculatedImpact);
-            packet.setRawData(rawData);
-                
-            result.addHealthPacket(pool.getPoolKey(), packet);
+            score = score - (int)(MAX_SCORE * degradedPercent);
+            result.addAction("Pool " + poolId + " is in unhealthy state (" + pool.getHealthValue() + ")");
         }
+        
+        result.setScore(score);
+        
         if (failed) {
             result.setStatus(RuleStatus.FAIL);
         }
