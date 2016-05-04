@@ -27,11 +27,10 @@
    ]
   },
   {
-   "name": "Connection", "score": 92,
+   "name": "Connection", "score": 91,
    "children": [
     {"name": "Host", "score": 90},
     {"name": "Port", "score": 91},
-    {"name": "Filesystem", "score": 92},
     {"name": "Storage Group", "score": 93}
    ]
   }
