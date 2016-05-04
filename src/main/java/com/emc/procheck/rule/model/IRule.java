@@ -13,9 +13,8 @@ public interface IRule {
     public String getId();
     public String getName();
     public String getDescription();
-    public int getImpact();
+    public double getWeight();
     public RuleResult getResult();
     
     public void check(String systemKey);
-    public void checkWithoutTenant(String sn, String systemKey);
 }
