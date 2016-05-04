@@ -125,6 +125,7 @@ function update(source) {
       .style("fill", "steelblue")
       .text(function(d) { return d.name; })
       .style("fill-opacity", 1e-6)
+      .on("mouseover", function(){d3.select(this).style("font-weight", "bold");})
       .on("mouseout", function(){d3.select(this).style("font-weight", "normal");});
 
   //dingj2 add text into the circle
