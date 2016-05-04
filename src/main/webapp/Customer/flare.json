@@ -1,38 +1,38 @@
 {
- "name": "Total Health Score",
+ "name": "Total Health Score", "score": 85,
  "children": [
   {
-   "name": "Upgrading",
+   "name": "Upgrading", "score": 75,
    "children": [
-    {"name": "Software", "size": 80},
-    {"name": "Firmware", "size": 81}
+    {"name": "Software", "score": 72},
+    {"name": "Firmware", "score": 81}
    ]
   },
   {
-   "name": "Hardware",
+   "name": "Hardware", "score": 90,
    "children": [
-    {"name": "Disk", "size": 82},
-    {"name": "DAE", "size": 83},
-    {"name": "Hot Spare", "size": 84},
-    {"name": "FANs", "size": 85}
+    {"name": "Disk", "score": 89},
+    {"name": "DAE", "score": 90},
+    {"name": "Hot Spare", "score": 91},
+    {"name": "FANs", "score": 90}
    ]
   },
   {
-   "name": "Configuration",
+   "name": "Configuration", "score": 88,
    "children": [
-    {"name": "LUNs", "size": 86},
-    {"name": "Pools", "size": 87},
-    {"name": "Filesystem", "size": 88},
-    {"name": "VVOL", "size": 89}
+    {"name": "LUNs", "score": 86},
+    {"name": "Pools", "score": 87},
+    {"name": "Filesystem", "score": 88},
+    {"name": "VVOL", "score": 89}
    ]
   },
   {
-   "name": "Connection",
+   "name": "Connection", "score": 92,
    "children": [
-    {"name": "Host", "size": 90},
-    {"name": "Port", "size": 91},
-    {"name": "Filesystem", "size": 92},
-    {"name": "Storage Group", "size": 93}
+    {"name": "Host", "score": 90},
+    {"name": "Port", "score": 91},
+    {"name": "Filesystem", "score": 92},
+    {"name": "Storage Group", "score": 93}
    ]
   }
  ]
