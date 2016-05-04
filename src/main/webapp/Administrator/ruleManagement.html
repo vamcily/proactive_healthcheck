@@ -26,7 +26,6 @@
           <th>Rule Name</th>
           <th>Component</th>
           <th>Version</th>
-          <th>Weight</th>
           <th>Recommended Action</th>
           <th>Condition</th>
         </tr>
@@ -39,7 +38,6 @@
           <td>Snap Rule</td>
           <td>Revision</td>
           <td>3.1.1</td>
-          <td>0.6</td>
           <td>Upgrade Software</td>
           <td>Snap number > 100 && Pool usage > 80%</td>
         </tr>
@@ -50,15 +48,13 @@
           <td>Version Rule</td>
           <td>Revision</td>
           <td>3.1.1</td>
-          <td>0.4</td>
           <td>Upgrade Software</td>
           <td>Snap number > 100 && Pool usage > 80%</td>
         </tr>
       </tbody>
     </table>
-    <button type="button">Add</button>
-    <button type="button">Delete</button>
-    <button type="button">Update</button>
+
+    <button type="button" onclick="window.open('ruleResult.html')">Run</button>
 </div>
 
 <script src="javascripts/script.js" type="text/javascript">
