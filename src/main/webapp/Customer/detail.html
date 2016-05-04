@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>System Health Details</title>
+    <link type="text/css" rel="stylesheet" href="style.css"/>
+    <script type="text/javascript" src="d3/d3.js"></script>
+    <script type="text/javascript" src="d3/d3.layout.js"></script>
+    <style type="text/css">
+
+
+.node circle {
+  cursor: pointer;
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font-size: 11px;
+}
+
+path.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+    </style>
+  </head>
+      <body>
+        <h3>System Name: FNM0808139466</h3>
+        <table border=1 style="width:100%;">
+          <tr>
+            <th>Items</th>
+            <th>Problem</th>
+            <th>Recommanded Action</th>
+            <th>Detailed Report</th>
+          </tr>
+          <tr>
+            <td>1</td> 
+            <td>The software version is too old</td>
+            <td>Upgrade software to latest version</td>
+            <td style="text-align:center"><u>Detail</u></td>
+          </tr>
+        </table>
+
+    <div id="body">
+      <div id="footer">
+        System Health Status
+        <div class="hint">click or option-click to expand or collapse</div>
+      </div>
+    </div>
+    <script type="text/javascript">
+
+var m = [50, 120, 50, 120],
+    w = 1680 - m[1] - m[3],   // dingj2 tree size
+    h = 1050 - m[0] - m[2],
+    i = 0,
+    root;
+
+var tree = d3.layout.tree()
+    .size([h, w]);
+
+var diagonal = d3.svg.diagonal()
+    .projection(function(d) { return [d.x, d.y]; });
+
+var vis = d3.select("#body").append("svg:svg")
+    .attr("width", w + m[1] + m[3])
+    .attr("height", h + m[0] + m[2])
+    .append("svg:g")
+    .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+
+d3.json("flare.json", function(json) {
+  root = json;
+  root.x0 = h / 2;
+  root.y0 = 0;
+
+  function toggleAll(d) {
+    if (d.children) {
+      d.children.forEach(toggleAll);
+      toggle(d);
+    }
+  }
+
+  // Initialize the display to show a few nodes.
+  // dingj2
+  root.children.forEach(toggleAll);
+  //toggle(root.children[1]);
+  //toggle(root.children[1].children[2]);
+
+  update(root);
+});
+
+function update(source) {
+  var duration = d3.event && d3.event.altKey ? 5000 : 500;
+
+  // Compute the new tree layout.
+  var nodes = tree.nodes(root).reverse();
+
+  // Normalize for fixed-depth.
+  nodes.forEach(function(d) { d.y = d.depth * 180; });
+
+  // Update the nodes…
+  var node = vis.selectAll("g.node")
+      .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+  // Enter any new nodes at the parent's previous position.
+  var nodeEnter = node.enter().append("svg:g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+      .on("click", function(d) { toggle(d); update(d); });
+
+  nodeEnter.append("svg:circle")
+      .attr("r", 1e-6)
+      .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+  nodeEnter.append("svg:text")
+      //.attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+      //.attr("dy", ".35em")
+      //.attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+      .attr("dx", function(d){if (d.depth==0) return 32; else if (d.depth==1) return 22; else return -2.5*d.name.length;})
+      .attr("dy", function(d){if (d.depth==0) return 10; else if (d.depth==1) return 4; else return 30;})
+      .style("font-size", function(d){if (d.depth==0) return 25;})
+      .style("fill", "steelblue")
+      .text(function(d) { return d.name; })
+      .style("fill-opacity", 1e-6)
+      .on("mouseover", function(){d3.select(this).style("font-weight", "bold");})
+      .on("mouseout", function(){d3.select(this).style("font-weight", "normal");});
+
+  //dingj2 add text into the circle
+  nodeEnter.append("svg:text")
+      .attr("dx", function(d){if (d.depth==0) return -13; else if (d.depth==1) return -11; else return -8;})
+      .attr("dy", function(d){if (d.depth==0) return 10; else if (d.depth==1) return 8; else return 5.5;})
+      .style("font-size", function(d){if (d.depth==0) return 25; else if (d.depth==1) return 20; else return 15;})
+      .style("fill", function(d){return d.score < 80 ? "black":"steelblue"})
+      .text(function(d){return d.score});
+
+  // Transition nodes to their new position.
+  var nodeUpdate = node.transition()
+      .duration(duration)
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });  //dingj2 exchange x and y
+
+  nodeUpdate.select("circle")
+      .attr("r", function(d){if (d.depth==0) return 30; else if (d.depth==1) return 20; else return 15;})  // dingj2 circle radius .attr("r", 4.5)
+      .style("fill", function(d) { if (d.score >= 90) return "#8BC34A"; else if (d.score >= 80) return "#FFEB3B"; else return "#F44336";});
+
+  nodeUpdate.select("text")
+      .style("fill-opacity", 1);
+
+  // Transition exiting nodes to the parent's new position.
+  var nodeExit = node.exit().transition()
+      .duration(duration)
+      .attr("transform", function(d) { return "translate(" + source.x + "," + source.y + ")"; })
+      .remove();
+
+  nodeExit.select("circle")
+      .attr("r", 1e-6);
+
+  nodeExit.select("text")
+      .style("fill-opacity", 1e-6);
+
+  // Update the links…
+  var link = vis.selectAll("path.link")
+      .data(tree.links(nodes), function(d) { return d.target.id; });
+
+  // Enter any new links at the parent's previous position.
+  link.enter().insert("svg:path", "g")
+      .attr("class", "link")
+      .attr("d", function(d) {
+        var o = {x: source.x0, y: source.y0};
+        return diagonal({source: o, target: o});
+      })
+    .transition()
+      .duration(duration)
+      .attr("d", diagonal);
+
+  // Transition links to their new position.
+  link.transition()
+      .duration(duration)
+      .attr("d", diagonal);
+
+  // Transition exiting nodes to the parent's new position.
+  link.exit().transition()
+      .duration(duration)
+      .attr("d", function(d) {
+        var o = {x: source.x, y: source.y};
+        return diagonal({source: o, target: o});
+      })
+      .remove();
+
+  // Stash the old positions for transition.
+  nodes.forEach(function(d) {
+    d.x0 = d.x;
+    d.y0 = d.y;
+  });
+}
+
+// Toggle children.
+function toggle(d) {
+  if (d.children) {
+    d._children = d.children;
+    d.children = null;
+  } else {
+    d.children = d._children;
+    d._children = null;
+  }
+}
+    </script>
+  </body>
+</html>
