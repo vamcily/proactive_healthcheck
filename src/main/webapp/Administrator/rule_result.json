@@ -1,0 +1,64 @@
+[
+    {
+        "id": "test_rr_1",
+        "status": "NOT_RUN",
+        "startTime": "2016-02-09T21:57:08.003+0800",
+        "endTime": "2016-02-09T21:59:08.003+0800",
+        "score": 95,
+        "weight": 0.3,
+        "component": "Hardware",
+        "ruleId": "test_rule",
+        "ruleName": "Test Rule Name",
+        "systemKey": "FL100143700043",
+        "serialNumber": "FL10014370004320160303065100-0",
+        "actions": [
+            "Action item 1",
+            "Action item 2",
+            "Action item 3"
+        ]
+    },
+    {
+        "id": "FL10014370004320160303065100-0_1462431792482",
+        "status": "PASS",
+        "startTime": "2016-05-05T15:03:12.482+0800",
+        "endTime": "2016-05-05T15:03:12.568+0800",
+        "score": 100,
+        "weight": 0.2,
+        "component": "Software",
+        "ruleId": "degradedPoolRule",
+        "ruleName": "Degraded Pool Rule",
+        "systemKey": "FL10014370004320160303065100-0",
+        "serialNumber": "FL100143700043",
+        "actions": []
+    },
+    {
+        "id": "FL10014370004320160303065100-0_1462431792407",
+        "status": "PASS",
+        "startTime": "2016-05-05T15:03:12.407+0800",
+        "endTime": "2016-05-05T15:03:12.649+0800",
+        "score": 100,
+        "weight": 0.3,
+        "component": "Software",
+        "ruleId": "diskRule",
+        "ruleName": "Disk Rule",
+        "systemKey": "FL10014370004320160303065100-0",
+        "serialNumber": "FL100143700043",
+        "actions": []
+    },
+    {
+        "id": "FL10014370004320160303065100-0_1462431792481",
+        "status": "FAIL",
+        "startTime": "2016-05-05T15:03:12.481+0800",
+        "endTime": "2016-05-05T15:03:12.657+0800",
+        "score": 0,
+        "weight": 0.5,
+        "component": "Software",
+        "ruleId": "versionRule",
+        "ruleName": "Version Rule",
+        "systemKey": "FL10014370004320160303065100-0",
+        "serialNumber": "FL100143700043",
+        "actions": [
+            "The system is not running the latest software version. 918 systems have been running well with version 3.1.5.6801782"
+        ]
+    }
+]
