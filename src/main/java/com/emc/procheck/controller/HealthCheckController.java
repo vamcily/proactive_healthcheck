@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.emc.procheck.rule.model.HealthCheckResult;
 import com.emc.procheck.rule.model.IRule;
+import com.emc.procheck.rule.model.RuleResult;
 import com.emc.procheck.rule.service.HealthCheckService;
 
 /**
@@ -27,9 +27,18 @@ public class HealthCheckController {
 
 	@Autowired
 	HealthCheckService healthCheckService;
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/runRules", produces = "application/json")
+	public List<RuleResult> runRules() {
+		logger.debug("Request to run rules on all systems");
+		
+		
+
+		return healthCheckService.runRules();
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/healthcheck/{serialNumber}", produces = "application/json")
-	public HealthCheckResult runCheck(@PathVariable String serialNumber) {
+	public List<RuleResult> runCheck(@PathVariable String serialNumber) {
 		logger.debug("Request to run health check on " + serialNumber);
 
 		return healthCheckService.runCheckBySn(serialNumber);
