@@ -112,9 +112,15 @@ public abstract class AbstractRule implements IRule, Cloneable {
 			return;
 		}
 
+		result.setId(systemKey + "_" + System.currentTimeMillis());
 		result.setStartTime(new Date());
 		result.setStatus(RuleStatus.RUNNING);
 		result.setWeight(weight);
+		result.setSystemKey(systemKey);
+		result.setSerialNumber(system.getSerialNumber());
+		result.setComponent(category);
+		result.setRuleId(id);
+		result.setRuleName(name);
 		
 		execute(systemKey);
 
