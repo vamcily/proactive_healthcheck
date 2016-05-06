@@ -2,7 +2,7 @@
   "id": "versionRule",
   "name": "Version Rule",
   "description": "Check whether latest version",
-  "category": "software",
+  "category": "Software",
   "weight": 0.5,
   "applicableVersion": "3.*",
   "applicableModel": ".*",

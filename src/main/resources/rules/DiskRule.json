@@ -2,7 +2,7 @@
   "id": "diskRule",
   "name": "Disk Rule",
   "description": "Check Disk Health",
-  "category": "hardware",
+  "category": "Software",
   "weight": 0.3,
   "applicableVersion": "3.*",
   "applicableModel": ".*"  
