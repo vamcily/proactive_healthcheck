@@ -2,7 +2,7 @@
   "id": "degradedPoolRule",
   "name": "Degraded Pool Rule",
   "description": "Check for degraded pools",
-  "category": "storage",
+  "category": "Software",
   "weight": 0.2,
   "applicableVersion": "3.*",
   "applicableModel": ".*"
