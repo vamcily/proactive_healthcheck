@@ -12,6 +12,10 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "uem_system_view")
 public class UemSystem {
 
+	private String customerId; 
+	private String customerName;
+	private String siteId;
+	private String siteName;
 	private String systemKey;
 	
 	@Id
@@ -28,6 +32,39 @@ public class UemSystem {
 	
 	public UemSystem(String serialNumber) {
 		setSerialNumber(serialNumber);
+	}
+	
+
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(String siteId) {
+		this.siteId = siteId;
+	}
+
+	public String getSiteName() {
+		return siteName;
+	}
+
+	public void setSiteName(String siteName) {
+		this.siteName = siteName;
 	}
 
 	public String getSystemKey() {

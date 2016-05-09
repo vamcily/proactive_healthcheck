@@ -36,6 +36,20 @@ public class UemSystemController extends TenantController {
         return uemSysteService.findAll();
     }
     
+    /**
+     * Get data of systems of specific version
+     * @param serialNumber
+     * @return Event
+     * @throws
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/system/listByCustomer", produces = "application/json")
+    public List<UemSystem> listSystemsByCustomer(@RequestParam String customerName) {
+
+        logger.debug("Request model=/system/listByCustomer, customerName=" + customerName);
+        return uemSysteService.findByCustomer(customerName);
+    }
+    
+    
     
     /**
      * Get data of systems of specific version

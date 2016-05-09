@@ -11,6 +11,8 @@ import com.emc.procheck.storage.model.UemSystem;
  */
 public interface UemSystemRepository extends TransformRepository<UemSystem, String>{
 
+	List<UemSystem> findByCustomerName(String customerName);
+	
 	List<UemSystem> findByVersion(String version);
 	
 	UemSystem findBySystemKey(String systemKey);
