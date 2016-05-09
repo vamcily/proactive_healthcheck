@@ -8,6 +8,7 @@
     <script type="text/javascript" src="d3/d3.layout.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script> 
     <script type="text/javascript" src="jquery.tipsy.js"></script>
+    <script type="text/javascript" src="../scripts/geturl.js"></script>
     <style type="text/css">
 
 .node circle {
@@ -26,11 +27,13 @@ path.link {
   stroke: #ccc;
   stroke-width: 1.5px;
 }
-
     </style>
   </head>
       <body>
-        <h3>System Name: FL100143700043</h3>
+        <h3 id="system"></h3>
+        <script>
+         document.getElementById("system").innerHTML = "System Name: "+ GetQueryString("serialNumber");
+        </script>
         <table border=1 style="width:100%;">
           <tr>
             <th>Items</th>
@@ -43,7 +46,7 @@ path.link {
             <td style="text-align:center"><u>Detail</u></td>
           </tr>
         </table>
-
+ 
     <div id="body">
       <div id="footer">
         System Health Status
@@ -51,7 +54,6 @@ path.link {
       </div>
     </div>
     <script type="text/javascript">
-
 var m = [50, 120, 50, 120],
     w = 1680 - m[1] - m[3],   // dingj2 tree size
     h = 1050 - m[0] - m[2],
