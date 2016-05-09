@@ -70,7 +70,7 @@ var vis = d3.select("#body").append("svg:svg")
     .append("svg:g")
     .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
-d3.json("../listHealthResult/FL100143700043?tid=emc", function(json) {
+d3.json("health_score_tree.json", function(json) {
   root = json;
   root.x0 = h / 2;
   root.y0 = 0;
@@ -109,7 +109,7 @@ function update(source) {
       .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
       .on("click", function(d) { toggle(d); update(d); });
 
-  nodeEnter.append("svg:circle")
+  nodeEnter.append("svg:circle");
       //.attr("r", 1e-6)
       //.style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
@@ -134,6 +134,13 @@ function update(source) {
       .style("fill", function(d){return d.score < 80 ? "black":"steelblue"})
       .text(function(d){return d.score});
 
+
+  nodeEnter.append("svg:image")
+      .attr("xlink:href", function(d) { return d.img; })
+      .attr("x", function(d){if (d.depth==0) return 20; else if (d.depth==1) return 11; else return 8;})
+      .attr("y", function(d){if (d.depth==0) return -45; else if (d.depth==1) return -40; else return -35;})
+      .attr("width", "30px")
+      .attr("height", "30px");
 
   // dingj2 tipsy
   $('svg circle').tipsy({ 
