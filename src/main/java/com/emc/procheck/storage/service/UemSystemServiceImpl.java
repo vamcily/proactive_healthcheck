@@ -20,6 +20,11 @@ public class UemSystemServiceImpl extends TransformServiceImpl<UemSystem, String
 	public List<UemSystem> findAll() {
 		return ((UemSystemRepository)repository).findAll();
 	}
+	
+	@Override
+	public List<UemSystem> findByCustomer(String customerName) {
+		return ((UemSystemRepository)repository).findByCustomerName(customerName);
+	}
 
 	@Override
 	public List<UemSystem> findByVersion(String version) {
