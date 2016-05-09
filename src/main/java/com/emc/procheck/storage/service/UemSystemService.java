@@ -10,9 +10,10 @@ public interface UemSystemService extends TransformService<UemSystem, String> {
 	public final static String BEANNAME = "uemSystemService";
 	
 	public List<UemSystem> findAll();
+
+	public List<UemSystem> findByCustomer(String customerName);
 	
 	public List<UemSystem> findByVersion(String version);
 	
 	public UemSystem findBySystemKey(String systemKey);
-
 }
