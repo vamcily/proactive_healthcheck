@@ -29,6 +29,7 @@ public abstract class AbstractRule implements IRule, Cloneable {
 	private double weight;
 	protected String applicableVersion;
 	protected String applicableModel;
+	protected boolean isSelected;
 	protected RuleResult result;
 	
 	protected UemSystem system;
@@ -36,7 +37,7 @@ public abstract class AbstractRule implements IRule, Cloneable {
 	protected static final int MAX_SCORE = 100;
 
 	private final static Logger logger = LoggerFactory.getLogger(AbstractRule.class);
-
+	
 	@Override
 	public String getId() {
 		return id;
@@ -89,6 +90,16 @@ public abstract class AbstractRule implements IRule, Cloneable {
 		this.applicableModel = applicableModel;
 	}
 
+	@Override
+	public boolean getIsSelected() {
+		return isSelected;
+	}
+
+	@Override
+	public void setIsSelected(boolean selected) {
+		this.isSelected = selected;
+	}
+	
 	@Override
 	public RuleResult getResult() {
 		return result;

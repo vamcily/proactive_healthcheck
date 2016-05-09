@@ -35,7 +35,7 @@
 
 $.ajax({
     type: "GET",
-    url: "../event/listBySerialNumber?serialNumber=APM00142009599&tid=emc",
+    url: "../event/listBySerialNumber?serialNumber=FL100143700043&tid=emc",
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: function (data) {
@@ -45,7 +45,7 @@ $.ajax({
 	        var txt = "";
 	        if(len > 0){
 	            for(var i=0;i<len;i++){
-	                txt += "<tr><td><a href=\"detail.html\">"+data[i].serialNumber+"</td><td>"+data[i].model+"</td></tr>";
+	                txt += "<tr><td><a href=\"detail.html\">"+data[i].serialNumber+"</td><td>"+data[i].model+"</td><td>3.2.1.0</td><td>Shanghai</td><td>90</td></tr>";
 	            }
 	            if(txt != ""){
 	                $("#table").append(txt).removeClass("hidden");
