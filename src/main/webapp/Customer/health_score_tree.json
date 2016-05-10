@@ -2,7 +2,6 @@
     "name": "",
     "score": 83,
     "weight": 1,
-    "img":"service-icon.png",
     "actions": [
         "The system is not running the latest software version. 918 systems have been running well with version 3.1.5.6801782"
     ],
@@ -11,7 +10,6 @@
             "name": "Upgrading",
             "score": 65,
             "weight": 0.25,
-            "img":"service-icon.png",
             "actions": [
                 "The system is not running the latest software version. 918 systems have been running well with version 3.1.5.6801782"
             ],
@@ -20,7 +18,6 @@
                     "name": "Software",
                     "score": 50,
                     "weight": 0.5,
-                    "img":"service-icon.png",
                     "actions": [
                         "The system is not running the latest software version. 918 systems have been running well with version 3.1.5.6801782"
                     ]
