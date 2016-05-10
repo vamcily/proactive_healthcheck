@@ -35,17 +35,20 @@
 
 $.ajax({
     type: "GET",
-    url: "../event/listBySerialNumber?serialNumber=APM00142009599&tid=emc",
+    url: "../system/listByCustomer?customerName=BMW&tid=emc ",
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: function (data) {
     	
             if(data){
+            	console.log(data);
 	        var len = data.length;
 	        var txt = "";
 	        if(len > 0){
+	        	var link = "";
 	            for(var i=0;i<len;i++){
-	                txt += "<tr><td><a href=\"detail.html\">"+data[i].serialNumber+"</td><td>"+data[i].model+"</td></tr>";
+	            	link = "<a href=\"detail.html?serialNumber="+data[i].serialNumber+"\" target=\"_blank\">";
+	                txt += "<tr><td>"+link+data[i].serialNumber+"</td><td>"+data[i].model+"</td><td>"+data[i].version+"</td><td>"+data[i].siteName+"</td><td>"+data[i].score+"</td></tr>";
 	            }
 	            if(txt != ""){
 	                $("#table").append(txt).removeClass("hidden");

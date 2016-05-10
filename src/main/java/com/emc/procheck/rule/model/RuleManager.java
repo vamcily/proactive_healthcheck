@@ -66,7 +66,13 @@ public class RuleManager {
         if (event != null)
             systemKey = event.getSystemKey();
         logger.debug("Got the latest systemKey[" + systemKey + "] by sn[" + sn + "]");
-        return runRulesBySystemKey(systemKey);
+        
+		List<RuleResult> results = runRulesBySystemKey(systemKey);
+		StorageComponent comp = constructHealthComponent(sn);
+		event.setScore(comp.getScore());
+		eventService.save(event);
+		
+		return results;
     }
 
 	public List<RuleResult> runRulesBySystemKey(String systemKey) {
@@ -110,7 +116,7 @@ public class RuleManager {
 			ruleResultService.save(rule.getResult());
 			results.add(rule.getResult());
 		}
-
+		
 		return results;
 	}
 	

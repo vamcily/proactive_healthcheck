@@ -2,11 +2,11 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <title>Rule Managerment</title>
+  <title>Rule Result</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
-
-
+  
+  <script src="../scripts/jquery-1.12.3.min.js"></script>
   <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 
@@ -20,29 +20,45 @@
       <thead>
         <tr>
           <th>No.</th>
-          <th>Customer</th>
-          <th>System</th>
-          <th>Site</th>
-          <th>Rule Matched</th>
-          <th>Detailed Report</th>
+          <th>Serial Number</th>
+          <th>Status</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Component</th>
+          <th>Rule Name</th>
+          <th>Weight</th>
+          <th>Score</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>CMCC</td>
-          <td>FNM0808139466</td>
-          <td>Shanghai</td>
-          <td>Snap Rule</td>
-          <td><u>Detail</u></td>
-        </tr>
+      <tbody id="tableBody">
+        <script>
+		$.ajax({
+			type: "GET",
+			url: "../listRuleResults?tid=emc",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (data) {
+				if(data){
+				var len = data.length;
+				var txt = "";
+				if(len > 0){
+					for(var i=0;i<len;i++){
+						txt += "<tr><td>"+i+"</td><td>"+data[i].serialNumber+"</td><td>"+data[i].status+"</td><td>"+data[i].startTime+"</td><td>"+data[i].endTime+"</td><td>"+data[i].component+"</td><td>"+data[i].ruleName+"</td><td>"+data[i].weight+"</td><td>"+data[i].score+"</td></tr>";
+					}
+					if(txt != ""){
+						$("#tableBody").append(txt).removeClass("hidden");
+					}
+				}
+			}
+			},
+			error: function (msg) {
+				alert(msg);
+			}
+		});
+      </script>
       </tbody>
     </table>
     <button type="button">Publish Rules</button>
 </div>
-
-<script src="javascripts/script.js" type="text/javascript">
-</script>
-
 </body>
 </html>
