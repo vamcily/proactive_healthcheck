@@ -41,6 +41,7 @@ public class Event {
 	private String capturestatus;
 	private String oeVersion;
 	private Long oeRevision;
+	private Integer score;
 
 	public Event() {
 	}
@@ -232,6 +233,14 @@ public class Event {
 
 	public void setOeRevision(Long oeRevision) {
 		this.oeRevision = oeRevision;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 
 	@Override
