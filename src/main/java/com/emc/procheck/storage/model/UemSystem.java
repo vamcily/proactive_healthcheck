@@ -25,6 +25,7 @@ public class UemSystem {
 	
 	private String model;
 	private String version;
+	private Integer score;
 	
 	public UemSystem() {
 		
@@ -97,6 +98,14 @@ public class UemSystem {
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 
 	@Override
