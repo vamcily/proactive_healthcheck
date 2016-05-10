@@ -34,19 +34,44 @@ path.link {
         <script>
          document.getElementById("system").innerHTML = "System Name: "+ GetQueryString("serialNumber");
         </script>
-        <table border=1 style="width:100%;">
-          <tr>
-            <th>Items</th>
-            <th>Recommanded Actions</th>
-            <th>Detailed Report</th>
-          </tr>
-          <tr>
-            <td>1</td> 
-            <td>Upgrade software to latest version</td>
-            <td style="text-align:center"><u>Detail</u></td>
-          </tr>
-        </table>
- 
+<!--         <table border=1 style="width:100%;">
+  <tr>
+    <th>Items</th>
+    <th>Recommanded Actions</th>
+    <th>Detailed Report</th>
+  </tr>
+  <tr>
+    <td>1</td> 
+    <td>Upgrade software to latest version</td>
+    <td style="text-align:center"><u>Detail</u></td>
+  </tr>
+</table> -->
+ <table id="table" class="hidden" border=1 style="width:100%">
+   <tr>
+   <th>Serial Number</th>
+   <th>Issues</th>
+   <th>Status</th>
+   <th>Detail</th>
+   </tr>
+   <tr>
+     <td>FNM0808139466</td>
+     <td>Array in old bundle, risk to hit known DU/DL issues</td>
+     <td>Detected</td>
+     <td>Need upgrading to latest bundle to avoid some known issue</td>
+   </tr>
+   <tr>
+     <td>FNM0808139466</td>
+     <td>LUN Offline</td>
+     <td>Detected</td>
+     <td>Need file SR and engage EMC support to resolve DU</td>
+   </tr>
+   <tr>
+     <td>FNM0808139466</td>
+     <td>Disk COH Errors</td>
+     <td>Detected</td>
+     <td>Need to call EMC support to replace disks to avoid potential DU/DL</td>
+   </tr>
+ </table>
     <div id="body">
       <div id="footer">
         System Health Status
@@ -142,14 +167,16 @@ function update(source) {
       .attr("x", function(d){if (d.depth==0) return 20; else if (d.depth==1) return 11; else return 8;})
       .attr("y", function(d){if (d.depth==0) return -45; else if (d.depth==1) return -40; else return -35;})
       .attr("width", "30px")
-      .attr("height", "30px");
+      .attr("height", "30px")
+      .style("display",function(d){ return d.img==null ? "none" : "block"})
+      .on("click",function(){ stopBubble(this.id); var val=confirm("Do you want to fix the issues?"); if(val) openwin(); })
 
   // dingj2 tipsy
   $('svg g').tipsy({ 
       gravity: 'w', 
       html: true, 
       title: function() {
-        return this.__data__.actions ? this.__data__.actions:"Great! No suggestions."; 
+        return this.__data__.hasOwnProperty("actions") ? this.__data__.actions:"Great! No suggestions.";  
       }
   });
 
@@ -222,6 +249,19 @@ function toggle(d) {
     d.children = d._children;
     d._children = null;
   }
+}
+
+function openwin() {  
+ window.open("page.html", "newwindow", "height=100, width=400, toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no") //写成一行  
+}  
+
+function stopBubble(e) { 
+if (e && e.stopPropagation) {//非IE浏览器 
+　　e.stopPropagation(); 
+} 
+else {//IE浏览器 
+window.event.cancelBubble = true; 
+} 
 }
     </script>
   </body>
