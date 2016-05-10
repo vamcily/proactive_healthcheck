@@ -4,11 +4,18 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title>System Health Details</title>
     <link type="text/css" rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/redmond/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css">
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../scripts/app.js"></script>
     <script type="text/javascript" src="d3/d3.js"></script>
     <script type="text/javascript" src="d3/d3.layout.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script> 
     <script type="text/javascript" src="jquery.tipsy.js"></script>
     <script type="text/javascript" src="../scripts/geturl.js"></script>
+    <script type="text/javascript" src="../scripts/progressbar.js"></script>
     <style type="text/css">
 
 .node circle {
@@ -27,6 +34,18 @@ path.link {
   stroke: #ccc;
   stroke-width: 1.5px;
 }
+
+.ui-progressbar {
+    position: relative;
+  }
+  .progress-label {
+    position: absolute;
+    left: 50%;
+    top: 4px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+  }
+
     </style>
   </head>
       <body>
@@ -46,7 +65,7 @@ path.link {
     <td style="text-align:center"><u>Detail</u></td>
   </tr>
 </table> -->
- <table id="table" class="hidden" border=1 style="width:100%">
+ <table id="table" border=1 style="width:100%">
    <tr>
    <th>Serial Number</th>
    <th>Issues</th>
@@ -56,19 +75,19 @@ path.link {
    <tr>
      <td>FNM0808139466</td>
      <td>Array in old bundle, risk to hit known DU/DL issues</td>
-     <td>Detected</td>
+     <td id="bundleStatus">Detected</td>
      <td>Need upgrading to latest bundle to avoid some known issue</td>
    </tr>
    <tr>
      <td>FNM0808139466</td>
-     <td>LUN Offline</td>
+     <td id="lunStatus">LUN Offline</td>
      <td>Detected</td>
      <td>Need file SR and engage EMC support to resolve DU</td>
    </tr>
    <tr>
      <td>FNM0808139466</td>
      <td>Disk COH Errors</td>
-     <td>Detected</td>
+     <td id="diskStatus">Detected</td>
      <td>Need to call EMC support to replace disks to avoid potential DU/DL</td>
    </tr>
  </table>
@@ -169,7 +188,7 @@ function update(source) {
       .attr("width", "30px")
       .attr("height", "30px")
       .style("display",function(d){ return d.actions==null ? "none" : "block"})
-      .on("click",function(){ stopBubble(this.id); var val=confirm("Do you want to fix the issues?"); if(val) openwin(); })
+      .on("click",function(){ stopBubble(this.id); clickAction();});//var val=confirm("Do you want to fix the issues?"); if(val) openwin(); });
 
   // dingj2 tipsy
   $('svg g').tipsy({ 
@@ -263,6 +282,27 @@ else {//IE浏览器
 window.event.cancelBubble = true; 
 } 
 }
-    </script>
+</script>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Modal Header</h3>
+</div>
+<div class="modal-body">
+  <div id="progressbar">
+    <div class="progress-label">Loading...</div>
+  </div>
+  <div>
+    Current Step:
+    <p class="progress-content"></p>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary">Save changes</button>
+</div>
+</div>
+
   </body>
 </html>
