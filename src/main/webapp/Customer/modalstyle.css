@@ -1,10 +1,17 @@
 #myModal {
   width: 300px;
-  height: 203px;
+  height: 186px;
 }
 
 #myModalLabel {
 	font-size: 100%;
+}
+
+.modal-body {
+	height: 70px;
+}
+.modal-footer {
+	padding: 5px 5px;
 }
 
 .ui-progressbar {
