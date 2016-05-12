@@ -284,17 +284,19 @@ window.event.cancelBubble = true;
     <h3 id="myModalLabel">Update Status</h3>
   </div>
   <div class="modal-body">
-    <div id="progressbar">
-      <div class="progress-label">Loading...</div>
+    <div id="progressbar" style="display: none;">
+      <div class="progress-label">Loading</div>
     </div>
     <div>
-      Current Step:
-      <p class="progress-content"></p>
+      <div id="stepTitle">
+        <B>Read to Upgrade</B>
+      </div>
+      <div class="progress-content"></div>
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary">Confirm</button>
+    <button class="confirmBtn" onClick="confirmUpgrade()" >Confirm</button>
+    <button class="closeBtn" data-dismiss="modal" aria-hidden="true">Close</button>
   </div>
 </div>
 </body>
