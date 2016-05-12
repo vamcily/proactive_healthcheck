@@ -170,9 +170,10 @@ function update(source) {
   nodeEnter.append("svg:text")
       .attr("dx", function(d){if (d.depth==0) return -13; else if (d.depth==1) return -11; else return -8;})
       .attr("dy", function(d){if (d.depth==0) return 10; else if (d.depth==1) return 8; else return 5.5;})
+      .attr("id","score")
       .style("font-size", function(d){if (d.depth==0) return 25; else if (d.depth==1) return 20; else return 15;})
       .style("fill", function(d){return d.score < 80 ? "black":"steelblue"})
-      .text(function(d){return d.score});
+      .text(function(d){ if(d.parent !=null && d.parent.score==100 ) return 100; else return d.score});
 
 
   nodeEnter.append("svg:image")
@@ -181,6 +182,7 @@ function update(source) {
       .attr("y", function(d){if (d.depth==0) return -45; else if (d.depth==1) return -40; else return -35;})
       .attr("width", "30px")
       .attr("height", "30px")
+      .attr("id",function(d){ if(d.actions!=null) return "image"+d.depth; })
       .style("display",function(d){ return d.actions==null ? "none" : "block"})
       .on("click",function(){ stopBubble(this.id); clickAction(this);});//var val=confirm("Do you want to fix the issues?"); if(val) openwin(); });
 
@@ -200,7 +202,7 @@ function update(source) {
 
   nodeUpdate.select("circle")
       .attr("r", function(d){if (d.depth==0) return 30; else if (d.depth==1) return 20; else return 15;})  // dingj2 circle radius .attr("r", 4.5)
-      .style("fill", function(d) { if (d.score >= 90) return "#8BC34A"; else if (d.score >= 80) return "#FFEB3B"; else return "#F44336";});
+      .style("fill", function(d) { if(d.parent !=null && d.parent.score==100 ) return "#8BC34A"; else if (d.score >= 90) return "#8BC34A"; else if (d.score >= 80) return "#FFEB3B"; else return "#F44336";});
 
   nodeUpdate.select("text")
       .style("fill-opacity", 1);
