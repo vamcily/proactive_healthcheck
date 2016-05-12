@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <title>System Health Details</title>
-    <link type="text/css" rel="stylesheet" href="style.css"/>
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/redmond/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <title>System Health Details</title>
+  <link type="text/css" rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/redmond/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css">
+  <link type="text/css" rel="stylesheet" href="modalstyle.css"/>
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.js"></script>
-    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.js"></script>
-    <script type="text/javascript" src="../scripts/app.js"></script>
-    <script type="text/javascript" src="d3/d3.js"></script>
-    <script type="text/javascript" src="d3/d3.layout.js"></script>
-    <script type="text/javascript" src="jquery.tipsy.js"></script>
-    <script type="text/javascript" src="../scripts/geturl.js"></script>
-    <script type="text/javascript" src="../scripts/progressbar.js"></script>
-    <style type="text/css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.js"></script>
+  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.js"></script>
+  <script type="text/javascript" src="../scripts/app.js"></script>
+  <script type="text/javascript" src="d3/d3.js"></script>
+  <script type="text/javascript" src="d3/d3.layout.js"></script>
+  <script type="text/javascript" src="jquery.tipsy.js"></script>
+  <script type="text/javascript" src="../scripts/geturl.js"></script>
+  <script type="text/javascript" src="../scripts/progressbar.js"></script>
+  <style type="text/css">
 
 .node circle {
   cursor: pointer;
@@ -35,69 +36,62 @@ path.link {
   stroke-width: 1.5px;
 }
 
-.ui-progressbar {
-    position: relative;
-  }
-  .progress-label {
-    position: absolute;
-    left: 50%;
-    top: 4px;
-    font-weight: bold;
-    text-shadow: 1px 1px 0 #fff;
-  }
-
     </style>
-  </head>
-      <body>
-        <h3 id="system"></h3>
-        <script>
+</head>
+<body>
+  <h3 id="system"></h3>
+  <script>
          document.getElementById("system").innerHTML = "System Name: "+ GetQueryString("serialNumber");
         </script>
-<!--         <table border=1 style="width:100%;">
+  <!--         <table border=1 style="width:100%;">
   <tr>
     <th>Items</th>
     <th>Recommanded Actions</th>
     <th>Detailed Report</th>
   </tr>
   <tr>
-    <td>1</td> 
+    <td>1</td>
     <td>Upgrade software to latest version</td>
-    <td style="text-align:center"><u>Detail</u></td>
+    <td style="text-align:center"> <u>Detail</u>
+    </td>
   </tr>
-</table> -->
- <table id="table" border=1 style="width:100%">
-   <tr>
-   <th>Serial Number</th>
-   <th>Issues</th>
-   <th>Status</th>
-   <th>Detail</th>
-   </tr>
-   <tr>
-     <td>FNM0808139466</td>
-     <td>Array in old bundle, risk to hit known DU/DL issues</td>
-     <td id="bundleStatus">Detected</td>
-     <td>Need upgrading to latest bundle to avoid some known issue</td>
-   </tr>
-   <tr>
-     <td>FNM0808139466</td>
-     <td id="lunStatus">LUN Offline</td>
-     <td>Detected</td>
-     <td>Need file SR and engage EMC support to resolve DU</td>
-   </tr>
-   <tr>
-     <td>FNM0808139466</td>
-     <td>Disk COH Errors</td>
-     <td id="diskStatus">Detected</td>
-     <td>Need to call EMC support to replace disks to avoid potential DU/DL</td>
-   </tr>
- </table>
-    <div id="body">
-      <div id="footer">
-        System Health Status
-        <div class="hint">click or option-click to expand or collapse</div>
-      </div>
-    </div>
-    <script type="text/javascript">
+</table>
+-->
+<table id="table" class="hidden" border=1 style="width:100%">
+  <tr>
+    <th>Serial Number</th>
+    <th>Issues</th>
+    <th>Status</th>
+    <th>Detail</th>
+  </tr>
+  <tr>
+    <td>FNM0808139466</td>
+    <td>Array in old bundle, risk to hit known DU/DL issues</td>
+    <td id="bundleStatus">Detected</td>
+    <td>Need upgrading to latest bundle to avoid some known issue</td>
+  </tr>
+  <tr>
+    <td>FNM0808139466</td>
+    <td id="lunStatus">LUN Offline</td>
+    <td>Detected</td>
+    <td>Need file SR and engage EMC support to resolve DU</td>
+  </tr>
+  <tr>
+    <td>FNM0808139466</td>
+    <td>Disk COH Errors</td>
+    <td id="diskStatus">Detected</td>
+    <td>
+      Need to call EMC support to replace disks to avoid potential DU/DL
+    </td>
+  </tr>
+</table>
+<div id="body">
+  <div id="footer">
+    System Health Status
+    <div class="hint">click or option-click to expand or collapse</div>
+  </div>
+</div>
+<script type="text/javascript">
 var m = [50, 120, 50, 120],
     w = 1680 - m[1] - m[3],   // dingj2 tree size
     h = 1050 - m[0] - m[2],
@@ -285,24 +279,23 @@ window.event.cancelBubble = true;
 </script>
 
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-<div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="myModalLabel">Modal Header</h3>
-</div>
-<div class="modal-body">
-  <div id="progressbar">
-    <div class="progress-label">Loading...</div>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Update Status</h3>
   </div>
-  <div>
-    Current Step:
-    <p class="progress-content"></p>
+  <div class="modal-body">
+    <div id="progressbar">
+      <div class="progress-label">Loading...</div>
+    </div>
+    <div>
+      Current Step:
+      <p class="progress-content"></p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Confirm</button>
   </div>
 </div>
-<div class="modal-footer">
-  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-  <button class="btn btn-primary">Save changes</button>
-</div>
-</div>
-
-  </body>
+</body>
 </html>
