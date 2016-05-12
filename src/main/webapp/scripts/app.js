@@ -10,6 +10,7 @@ $('#trigger').click(function(){
 function clickAction(me){
 	
   d3.select(me).attr("xlink:href", function(d) {return "loading-icon.gif";});
+  $("#myModal").modal({backdrop:false});
   $('#myModal').modal('show');
   setTimeout( function completeFix() { setCompleteIcon(me); }, 13000 );
   return false;
