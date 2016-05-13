@@ -67,6 +67,8 @@ function  upgradeScore(me){
 
 function changeScoreJson(data){
   data.score = 100;
+  if(data.actions != null)
+  	data.actions="Fixed";
   var children = data.children;
   if(children != null){
     for(var i in children){
