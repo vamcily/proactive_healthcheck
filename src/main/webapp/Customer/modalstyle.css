@@ -1,0 +1,34 @@
+#myModal {
+  width: 300px;
+  height: 186px;
+}
+
+#myModalLabel {
+	font-size: 100%;
+}
+
+.modal-body {
+	height: 70px;
+}
+.modal-footer {
+	padding: 5px 5px;
+}
+
+.ui-progressbar {
+	height: 13px;
+    position: relative;
+  }
+
+.progress-label {
+    position: absolute;
+    left: 45%;
+    top: 4px;
+    font-weight: bold;
+    line-height: 3px;
+    font-size: 11.5px;
+    text-shadow: 1px 1px 0 #fff;
+  }
+
+  .confirmBtn, .closeBtn {
+  	background-color: #33CCFF; 
+  }
