@@ -96,6 +96,7 @@ var m = [50, 120, 50, 120],
     w = 1680 - m[1] - m[3],   // dingj2 tree size
     h = 1050 - m[0] - m[2],
     i = 0,
+    clickedImage,
     root;
 
 var tree = d3.layout.tree()
@@ -177,14 +178,14 @@ function update(source) {
 
 
   nodeEnter.append("svg:image")
-      .attr("xlink:href", function(d) {if (d.actions=="Fixed") return "check-icon.png"; else if (d.actions=="InProgress") return "loading-icon.gif"; else if (d.actions!=null) return "service-icon.png"; else return null; })
+      .attr("xlink:href", function(d) {if (d.parent !=null && d.parent.score==100) return "check-icon.png"; else if (d.actions=="Fixed") return "check-icon.png"; else if (d.actions=="InProgress") return "loading-icon.gif"; else if (d.actions!=null) return "service-icon.png"; else return null; })
       .attr("x", function(d){if (d.depth==0) return 20; else if (d.depth==1) return 11; else return 8;})
       .attr("y", function(d){if (d.depth==0) return -45; else if (d.depth==1) return -40; else return -35;})
       .attr("width", "30px")
       .attr("height", "30px")
       .attr("id",function(d){ if(d.actions!=null) return "image"+d.depth; })
       .style("display",function(d){ return d.actions==null ? "none" : "block"})
-      .on("click",function(){ stopBubble(this.id); clickAction(this);});//var val=confirm("Do you want to fix the issues?"); if(val) openwin(); });
+      .on("click",function(){ stopBubble(this.id); clickedImage= this; clickAction();});//var val=confirm("Do you want to fix the issues?"); if(val) openwin(); });
 
   // dingj2 tipsy
   $('svg g').tipsy({ 
