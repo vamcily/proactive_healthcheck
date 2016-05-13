@@ -26,11 +26,14 @@ function setCompleteIcon(me) {
   if(me.id=="image0"){
     d3.select("#image1").attr("xlink:href", function(d) {return "check-icon.png";});
     d3.select("#image2").attr("xlink:href", function(d) {return "check-icon.png";});
+    changeScoreJson(root);
   } else if(me.id=="image1") {
     d3.select("#image2").attr("xlink:href", function(d) {return "check-icon.png";});
-  }
+    changeScoreJson(root.children[0]);
+  } else
+  	changeScoreJson(root.children[0].children[0]);
   upgradeScore(me);
-  changeScoreJson(root);
+  //changeScoreJson(root);
 }
 
 
