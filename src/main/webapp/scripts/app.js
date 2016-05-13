@@ -30,7 +30,7 @@ function setCompleteIcon(me) {
     d3.select("#image2").attr("xlink:href", function(d) {return "check-icon.png";});
   }
   upgradeScore(me);
-  //changeScoreJson(me);
+  changeScoreJson(root);
 }
 
 
@@ -62,7 +62,7 @@ function  upgradeScore(me){
   }
 }
 
-/*function changeScoreJson(data){
+function changeScoreJson(data){
   data.score = 100;
   var children = data.children;
   if(children != null){
@@ -71,4 +71,4 @@ function  upgradeScore(me){
     }
 
   }
-}*/
+}
