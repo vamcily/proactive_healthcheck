@@ -44,3 +44,4 @@ function confirmUpgrade() {
   setTimeout(progress, 3000);
 }
 
+
