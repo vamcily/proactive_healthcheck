@@ -17,6 +17,7 @@
   <script type="text/javascript" src="jquery.tipsy.js"></script>
   <script type="text/javascript" src="../scripts/geturl.js"></script>
   <script type="text/javascript" src="../scripts/progressbar.js"></script>
+  <script type="text/javascript" src="../scripts/drag.js"></script>
   <style type="text/css">
 
 .node circle {
@@ -185,7 +186,7 @@ function update(source) {
       .attr("height", "30px")
       .attr("id",function(d){ if(d.actions!=null) return "image"+d.depth; })
       .style("display",function(d){ return d.actions==null ? "none" : "block"})
-      .on("click",function(){ stopBubble(this.id); clickedImage= this; clickAction();});//var val=confirm("Do you want to fix the issues?"); if(val) openwin(); });
+      .on("click",function(d){ stopBubble(this.id); clickedImage= this; if(d.actions == "LUN faulted.") clickActionConfiguration(); else clickAction();});//var val=confirm("Do you want to fix the issues?"); if(val) openwin(); });
 
   // dingj2 tipsy
   $('svg g').tipsy({ 
@@ -207,6 +208,12 @@ function update(source) {
 
   nodeUpdate.select("text")
       .style("fill-opacity", 1);
+
+  nodeUpdate.select("#score")
+      .text(function(d){return d.score;});
+
+  nodeUpdate.select("image")
+      .attr("xlink:href", function(d) { if (d.actions=="Fixed") return "check-icon.png"; else if (d.actions=="InProgress") return "loading-icon.gif"; else if (d.actions!=null) return "service-icon.png"; else return null; });
 
   // Transition exiting nodes to the parent's new position.
   var nodeExit = node.exit().transition()
@@ -267,10 +274,6 @@ function toggle(d) {
   }
 }
 
-function openwin() {  
- window.open("page.html", "newwindow", "height=100, width=400, toolbar =no, menubar=no, scrollbars=no, resizable=no, location=no, status=no") //写成一行  
-}  
-
 function stopBubble(e) { 
 if (e && e.stopPropagation) {//非IE浏览器 
 　　e.stopPropagation(); 
@@ -292,7 +295,7 @@ window.event.cancelBubble = true;
     </div>
     <div>
       <div id="stepTitle">
-        <B>Read to Upgrade</B>
+        <B>Ready to Upgrade</B>
       </div>
       <div class="progress-content"></div>
     </div>
@@ -301,6 +304,59 @@ window.event.cancelBubble = true;
     <button class="confirmBtn" onClick="confirmUpgrade()" >Confirm</button>
     <button class="closeBtn" data-dismiss="modal" aria-hidden="true">Close</button>
   </div>
+</div>
+<div id="myLunModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Recommended Actions</h3>
+  </div>
+  <div class="modal-body lun-modal-body">
+      <div id="recommend-action">
+        <B>There are faulted LUNs. Please click on the "Open SR" button to create an SR.</B>
+      </div>
+    <div id="process" class = "order-process" style="display: none">
+      <div class="node ready"> <i class="icon-start"></i>
+        <ul>
+          <li class="txt1">&nbsp;</li>
+          <li class="txt1">&nbsp;</li>
+          <li id="start-step">Open an AR</li>
+          <li class="txt2"><img id="start-step-icon" src=""/></li>
+        </ul>
+      </div>
+      <div class="proce start">
+        <ul>
+          <li class="txt1"></li>
+        </ul>
+      </div>
+      <div class="node fixing"> <i class="icon-fixing"></i>
+        <ul>
+          <li class="txt1">&nbsp;</li>
+          <li class="txt1">&nbsp;</li>
+          <li id="fixing-step">AR status</li>
+          <li class="txt2"><img id="fixing-step-icon" src=""/></li>
+        </ul>
+      </div>
+      <div class="proce done">
+        <ul>
+          <li class="txt1"></li>
+        </ul>
+      </div>
+      <div class="node fixed">
+        <i class="icon-fixed"></i>
+        <ul>
+          <li class="txt1">&nbsp;</li>
+          <li class="txt1">&nbsp;</li>
+          <li id="finish-step">Finish</li>
+          <li class="txt2"><img id="finish-step-icon" src=""/></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+  <button class="confirm-lun-btn" onClick="confirmOpenSR()" >Open SR</button>
+    <button class="closeBtn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+
 </div>
 </body>
 </html>

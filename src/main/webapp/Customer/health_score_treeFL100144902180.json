@@ -1,106 +1,106 @@
 {
     "name": "",
-    "score": 83,
+    "score": 88,
     "weight": 1,
     "actions": [
-        "The system is not running the latest software version. 918 systems have been running well with version 3.1.5.6801782"
+        "LUN faulted."
     ],
     "children": [
         {
             "name": "Upgrading",
-            "score": 65,
+            "score": 100,
             "weight": 0.25,
-            "actions": [
-                "The system is not running the latest software version. 918 systems have been running well with version 3.1.5.6801782"
-            ],
             "children": [
                 {
                     "name": "Software",
-                    "score": 50,
-                    "weight": 0.5,
-                    "actions": [
-                        "The system is not running the latest software version. 918 systems have been running well with version 3.1.5.6801782"
-                    ]
+                    "score": 100,
+                    "weight": 0.5
                 },
                 {
                     "name": "Firmware",
-                    "score": 81,
+                    "score": 100,
                     "weight": 0.5
                 }
             ]
         },
         {
             "name": "Hardware",
-            "score": 90,
+            "score": 100,
             "weight": 0.25,
             "children": [
                 {
                     "name": "Disk",
-                    "score": 89,
+                    "score": 100,
                     "weight": 0.25
                 },
                 {
                     "name": "DAE",
-                    "score": 90,
+                    "score": 100,
                     "weight": 0.25
                 },
                 {
                     "name": "Hot Spare",
-                    "score": 91,
+                    "score": 100,
                     "weight": 0.25
                 },
                 {
                     "name": "FANs",
-                    "score": 90,
+                    "score": 100,
                     "weight": 0.25
                 }
             ]
         },
         {
             "name": "Configuration",
-            "score": 87,
+            "score": 70,
             "weight": 0.25,
+            "actions": [
+                "LUN faulted."
+            ],
             "children": [
                 {
                     "name": "LUN",
-                    "score": 86,
-                    "weight": 0.25
+                    "score": 60,
+                    "weight": 0.25,
+                    "actions": [
+                        "LUN faulted."
+                    ]
                 },
                 {
                     "name": "Pool",
-                    "score": 87,
+                    "score": 100,
                     "weight": 0.25
                 },
                 {
                     "name": "Filesystem",
-                    "score": 88,
+                    "score": 100,
                     "weight": 0.25
                 },
                 {
                     "name": "VVOL",
-                    "score": 89,
+                    "score": 100,
                     "weight": 0.25
                 }
             ]
         },
         {
             "name": "Connection",
-            "score": 91,
+            "score": 100,
             "weight": 0.25,
             "children": [
                 {
                     "name": "Host",
-                    "score": 90,
+                    "score": 100,
                     "weight": 0.4
                 },
                 {
                     "name": "Port",
-                    "score": 91,
+                    "score": 100,
                     "weight": 0.3
                 },
                 {
                     "name": "Storage Group",
-                    "score": 93,
+                    "score": 100,
                     "weight": 0.3
                 }
             ]
