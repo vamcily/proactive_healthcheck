@@ -4,7 +4,7 @@
     refreshPositions: true  
 }); 
 */
-function clickAction() {
+function clickAction(serialNumber) {	
 	$("#myModal").draggable();
 	$("#myModal").modal({
 		backdrop: false

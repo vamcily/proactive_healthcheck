@@ -2,7 +2,14 @@ function confirmUpgrade() {
   var progressbar = $("#progressbar"),
     progressLabel = $(".progress-label"),
     progressContent = $(".progress-content"),
-    stepTitle = $("#stepTitle");
+    stepTitle = $("#stepTitle"),
+    fUrl = "../fixComponent?serialNumber=" + serialNumber + "&component=Software&tid=emc";
+  
+  $.ajax({
+    type: "GET",
+    url: fUrl
+  });
+  
   bundleStatus = $("#bundleStatus");
   
   $(".confirmBtn").attr("disabled",true);
@@ -29,6 +36,7 @@ function confirmUpgrade() {
       progressContent.text("All steps complete!");
       bundleStatus.text("Fixed");
       completeFix();
+      window.location.reload(false); 
     }
   });
 

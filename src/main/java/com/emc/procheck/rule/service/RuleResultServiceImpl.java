@@ -21,7 +21,7 @@ public class RuleResultServiceImpl implements RuleResultService {
     
     @Autowired
     private RuleManager ruleMgr; 
-
+    
     @Autowired
     public RuleResultServiceImpl(RuleResultRepository repository) {
         this.repository = repository;
@@ -74,5 +74,17 @@ public class RuleResultServiceImpl implements RuleResultService {
 	@Override
 	public StorageComponent retrieveHealthResult(String serialNumber) {
 		return ruleMgr.constructHealthComponent(serialNumber);
+	}
+
+	@Override
+	public void fixComponent(String serialNumber, String component) {
+		List<RuleResult> results = findLatestRuleResults(component, serialNumber);
+		for (RuleResult rst : results) {
+			rst.setScore(100);
+			List<String> acts = new ArrayList<String>();
+			acts.add("Fixed");
+			rst.setActions(acts);
+		}
+		repository.save(results);
 	}
 }
