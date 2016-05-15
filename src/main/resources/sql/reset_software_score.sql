@@ -1,0 +1,4 @@
+﻿UPDATE emc.rule_result SET score=20 WHERE id='FL10014370004320160303065100-0_1462848256238';
+UPDATE emc.rule_action SET action='The system is not running the latest version 3.1.5.6801782. More than 1000 systems have been running well with that version.' WHERE id='FL10014370004320160303065100-0_1462848256238';
+DELETE FROM emc.rule_action WHERE id='FL10014370004320160303065100-0_1462848256480';
+DELETE FROM emc.rule_action WHERE id='FL10014370004320160303065100-0_1462431792407';
