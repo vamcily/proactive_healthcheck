@@ -1,4 +1,11 @@
+/*$("#myModal").draggable({   
+    handle: ".modal-header",   
+    cursor: 'move',   
+    refreshPositions: true  
+}); 
+*/
 function clickAction() {
+	$("#myModal").draggable();
 	$("#myModal").modal({
 		backdrop: false
 	});
@@ -127,6 +134,7 @@ function updateParentScore(data) {
 
 //LUN faulted fix process
 function clickActionConfiguration() {
+	$("#myLunModal").draggable();
 	$("#myLunModal").modal({
 		backdrop: false
 	});
