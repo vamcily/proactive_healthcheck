@@ -36,7 +36,7 @@ function confirmUpgrade() {
       progressContent.text("All steps complete!");
       bundleStatus.text("Fixed");
       completeFix();
-      window.location.reload(false); 
+      //window.location.reload(false); 
     }
   });
 
