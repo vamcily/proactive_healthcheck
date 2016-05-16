@@ -7,6 +7,11 @@
 	font-size: 100%;
 }
 
+#myLunModal {
+  width: 410px;
+  height: 186px;
+}
+
 .modal-body {
 	height: 70px;
 }
@@ -29,6 +34,107 @@
     text-shadow: 1px 1px 0 #fff;
   }
 
-  .confirmBtn, .closeBtn {
-  	background-color: #33CCFF; 
+  .confirm-lun-btn,.confirmBtn, .closeBtn {
+  	background-color:  #87CEFA ;/* #4682B4 */ 
   }
+
+.icon-start {
+    position: absolute;
+    display: block;
+    left: 30px;
+    top: 0;
+    width: 35px;
+    height: 35px;
+    background: url("help-icon.png") no-repeat;
+    background-size: cover;
+}
+ 
+ ol,ul {
+    list-style: none;
+}
+
+#process {
+    position: absolute;
+    width: 100%;
+    margin-top: 0px;
+    text-align: center;
+}
+
+.node, ul {
+	position: relative;
+	z-index: 1;
+	width: 90px;
+    height: 80px;
+    margin-left: 5px;
+    top: 0px;
+}
+
+.node {
+	    overflow: hidden;
+}
+
+/* .order-process , .node{
+	position: relative;
+    top: -17px;
+    float: left;
+    width: 45px;
+    height: 43px;
+} */
+/* .icon-start{
+    background-position: 10px 0px;
+} */
+
+.proce {
+	position: relative;
+    display: block;
+    float: left;
+    left: 75px;
+    top: -70px;
+    width: 100px;
+    height: 20px;
+    background: url("proce-icon.png") no-repeat;
+    background-size: cover;
+}
+
+/* .done {
+	    background-position: 50px -38px;
+}  */
+
+.icon-fixing {
+	position: absolute;
+    display: block;
+    left: 30px;
+    width: 35px;
+    height: 35px;
+    background: url("openincident-icon.png") no-repeat;
+    background-size: cover;
+}
+
+.done {
+	left: 220px;
+    top: -150px;
+}
+
+.fixing {
+	top: -80px;
+	left:50px;
+}
+
+.icon-fixed {
+	position: absolute;
+    display: block;
+    left: 30px;
+    width: 35px;
+    height: 35px;
+    background: url("finish-icon.png") no-repeat;
+    background-size: cover;
+}
+
+.fixed {
+	top: -160px;
+	left:200px;
+}
+
+.lun-modal-body {
+	overflow: hidden;
+}

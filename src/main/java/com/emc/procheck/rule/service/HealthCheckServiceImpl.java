@@ -83,6 +83,4 @@ public class HealthCheckServiceImpl extends TransformServiceImpl<RuleInfo, Strin
 		//((RuleInfoRepository)repository).
 		return rules;
 	}
-    
-    
 }

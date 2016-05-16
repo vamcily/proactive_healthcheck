@@ -21,4 +21,5 @@ public interface RuleResultService {
     
     public StorageComponent retrieveHealthResult(String serialNumber);
 
+	public void fixComponent(String serialNumber, String component);
 }
