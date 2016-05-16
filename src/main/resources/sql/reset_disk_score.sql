@@ -1,0 +1,2 @@
+﻿UPDATE emc.rule_result SET score=70 WHERE id='FL10014370004320160303065100-0_1462848256334';
+UPDATE emc.rule_action SET action='The disk 0_0_3 on DPE 1 is faulted and needs replacement.' WHERE id='FL10014370004320160303065100-0_1462848256334';
