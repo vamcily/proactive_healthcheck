@@ -6,10 +6,12 @@ function confirmUpgrade() {
   bundleStatus = $("#bundleStatus");
   
   $(".confirmBtn").attr("disabled",true);
+  var btn = $(".confirmBtn");
+  btn.attr("disabled",true);
+  btn.attr("style","background:#CCCCCC");
+
   progressbar.show();
   stepTitle.text("Current Step:");
-  
-
 
   progressbar.progressbar({
     value: false,
@@ -26,6 +28,7 @@ function confirmUpgrade() {
       progressLabel.text("complete!");
       progressContent.text("All steps complete!");
       bundleStatus.text("Fixed");
+      completeFix();
     }
   });
 
@@ -37,5 +40,7 @@ function confirmUpgrade() {
       setTimeout(progress, 100);
     }
   }
+  setLoadIcon();
   setTimeout(progress, 3000);
 }
+
