@@ -86,10 +86,10 @@ path.link {
   </tr>
 </table>
 <div id="body">
-  <div id="footer">
+<!--   <div id="footer">
     System Health Status
     <div class="hint">click or option-click to expand or collapse</div>
-  </div>
+  </div> -->
 </div>
 <script type="text/javascript">
 var m = [50, 120, 50, 120],
@@ -209,7 +209,7 @@ function update(source) {
       .attr("text-anchor", "middle")
       .attr("id","score")
       .style("font-size", function(d){if (d.depth==0) return 25; else if (d.depth==1) return 20; else return 15;})
-      .style("fill", function(d){return d.score < 80 ? "black":"steelblue"})
+      .style("fill", "black")
       .text(function(d){ if(d.parent !=null && d.parent.score==100 ) return 100; else return d.score});
 
 
@@ -389,7 +389,7 @@ function stopBubble(e) {
           <li class="txt1">&nbsp;</li>
           <li class="txt1">&nbsp;</li>
           <li id="fixing-step">SR status</li>
-          <li class="txt2"><img id="fixing-step-icon" src=""/></li>
+          <li id="fixing-progress"><img id="fixing-step-icon" src=""/></li>
         </ul>
       </div>
       <div class="proce done">
