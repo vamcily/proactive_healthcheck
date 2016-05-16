@@ -4,7 +4,7 @@
     refreshPositions: true  
 }); 
 */
-function clickAction() {
+function clickAction(serialNumber) {	
 	$("#myModal").draggable();
 	$("#myModal").modal({
 		backdrop: false
@@ -143,6 +143,13 @@ function clickActionConfiguration() {
 }
 
 function confirmOpenSR() {
+	
+    fUrl = "../fixComponent?serialNumber=" + serialNumber + "&component=Disk&tid=emc";
+    
+    $.ajax({
+      type: "GET",
+      url: fUrl
+    });
 
 	var recommendAction = $("#recommend-action"),
 		fixProcess = $("#process"),
@@ -189,6 +196,7 @@ function confirmOpenSR() {
 		finishStepIcon.css("height", "15px");
 
 		completeLunFix();
+		window.location.reload(false); 
 	}, 8000);
 
 

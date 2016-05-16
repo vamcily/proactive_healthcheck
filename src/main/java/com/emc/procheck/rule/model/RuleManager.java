@@ -170,7 +170,7 @@ public class RuleManager {
 
 	private void loadRuleResult(StorageComponent component, String serialNumber) {
 		// We only have rules for Software now, use default value in json file
-		if (!"Software".equals(component.getName())) {
+		if ( !"Software".equals(component.getName()) && !"Disk".equals(component.getName()) ) {
 			return;
 		}
 		

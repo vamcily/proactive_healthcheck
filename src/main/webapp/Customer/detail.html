@@ -112,6 +112,39 @@ var vis = d3.select("#body").append("svg:svg")
     .append("svg:g")
     .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
+var serialNumber = GetQueryString("serialNumber");
+var qUrl = "../listHealthResult/" + serialNumber + "?tid=emc";
+
+$.ajax({
+    type: "GET",
+    url: qUrl,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (data) {
+    	  root = data;
+    	  root.x0 = h / 2;
+    	  root.y0 = 0;
+
+    	  function toggleAll(d) {
+    	    if (d.children) {
+    	      d.children.forEach(toggleAll);
+    	      toggle(d);
+    	    }
+    	  }
+
+    	  // Initialize the display to show a few nodes.
+    	  // dingj2
+    	  root.children.forEach(toggleAll);
+    	  //toggle(root.children[3]);
+
+    	  update(root);
+    },
+    error: function (msg) {
+       alert(msg);
+    }
+});
+
+/*
 d3.json("health_score_tree"+GetQueryString("serialNumber")+".json", function(json) {
   root = json;
   root.x0 = h / 2;
@@ -130,7 +163,7 @@ d3.json("health_score_tree"+GetQueryString("serialNumber")+".json", function(jso
   //toggle(root.children[3]);
 
   update(root);
-});
+});*/
 
 function update(source) {
   var duration = d3.event && d3.event.altKey ? 5000 : 500;
@@ -170,8 +203,9 @@ function update(source) {
 
   //dingj2 add text into the circle
   nodeEnter.append("svg:text")
-      .attr("dx", function(d){if (d.depth==0) return -13; else if (d.depth==1) return -11; else return -8;})
+      //.attr("dx", function(d){if (d.depth==0) return -13; else if (d.depth==1) return -11; else return -8;})
       .attr("dy", function(d){if (d.depth==0) return 10; else if (d.depth==1) return 8; else return 5.5;})
+      .attr("text-anchor", "middle")
       .attr("id","score")
       .style("font-size", function(d){if (d.depth==0) return 25; else if (d.depth==1) return 20; else return 15;})
       .style("fill", function(d){return d.score < 80 ? "black":"steelblue"})
@@ -179,14 +213,28 @@ function update(source) {
 
 
   nodeEnter.append("svg:image")
-      .attr("xlink:href", function(d) {if (d.parent !=null && d.parent.score==100) return "check-icon.png"; else if (d.actions=="Fixed") return "check-icon.png"; else if (d.actions=="InProgress") return "loading-icon.gif"; else if (d.actions!=null) return "service-icon.png"; else return null; })
+      .attr("xlink:href", function(d) {
+	    	  if (d.parent !=null && d.parent.score==100) 
+	    		  return "check-icon.png"; 
+	    	  else if (d.actions && d.actions[0]=="Fixed") return "check-icon.png"; 
+	    	  else if (d.name=="Hardware" || d.name=="Disk") return "catalog-icon.png"; 
+	    	  else if (d.name=="Upgrading" || d.name=="Software") return "service-icon.png"; 
+	    	  else return null; 
+    	  })
       .attr("x", function(d){if (d.depth==0) return 20; else if (d.depth==1) return 11; else return 8;})
       .attr("y", function(d){if (d.depth==0) return -45; else if (d.depth==1) return -40; else return -35;})
       .attr("width", "30px")
       .attr("height", "30px")
       .attr("id",function(d){ if(d.actions!=null) return "image"+d.depth; })
       .style("display",function(d){ return d.actions==null ? "none" : "block"})
-      .on("click",function(d){ stopBubble(this.id); clickedImage= this; if(d.actions == "LUN faulted.") clickActionConfiguration(); else clickAction();});//var val=confirm("Do you want to fix the issues?"); if(val) openwin(); });
+      .on("click",function(d) { 
+    	  	stopBubble(this.id); 
+    	  	clickedImage= this; 
+    	  	if(d.name=="Hardware" || d.name=="Disk") 
+    	  		clickActionConfiguration(); 
+    	  	else if (d.name=="Upgrading" || d.name=="Software")
+    	  		clickAction(serialNumber);
+    	  });//var val=confirm("Do you want to fix the issues?"); if(val) openwin(); });
 
   // dingj2 tipsy
   $('svg g').tipsy({ 
@@ -213,7 +261,14 @@ function update(source) {
       .text(function(d){return d.score;});
 
   nodeUpdate.select("image")
-      .attr("xlink:href", function(d) { if (d.actions=="Fixed") return "check-icon.png"; else if (d.actions=="InProgress") return "loading-icon.gif"; else if (d.actions!=null) return "service-icon.png"; else return null; });
+      .attr("xlink:href", function(d) {
+    	  if (d.parent !=null && d.parent.score==100) 
+    		  return "check-icon.png"; 
+    	  else if (d.actions && d.actions[0]=="Fixed" && d.score==100) return "check-icon.png"; 
+    	  else if (d.name=="Hardware" || d.name=="Disk") return "catalog-icon.png"; 
+    	  else if (d.name=="Upgrading" || d.name=="Software") return "service-icon.png"; 
+    	  else return null; 
+	  });
 
   // Transition exiting nodes to the parent's new position.
   var nodeExit = node.exit().transition()
@@ -275,12 +330,12 @@ function toggle(d) {
 }
 
 function stopBubble(e) { 
-if (e && e.stopPropagation) {//非IE浏览器 
-　　e.stopPropagation(); 
-} 
-else {//IE浏览器 
-window.event.cancelBubble = true; 
-} 
+	if (e && e.stopPropagation) {//非IE浏览器 
+	　　e.stopPropagation(); 
+	} 
+	else {//IE浏览器 
+		window.event.cancelBubble = true; 
+	} 
 }
 </script>
 
@@ -312,14 +367,14 @@ window.event.cancelBubble = true;
   </div>
   <div class="modal-body lun-modal-body">
       <div id="recommend-action">
-        <B>There are faulted LUNs. Please click on the "Open SR" button to create an SR.</B>
+        <B>There is faulted Disk. Please click on the "Open SR" button to create an SR.</B>
       </div>
     <div id="process" class = "order-process" style="display: none">
       <div class="node ready"> <i class="icon-start"></i>
         <ul>
           <li class="txt1">&nbsp;</li>
           <li class="txt1">&nbsp;</li>
-          <li id="start-step">Open an AR</li>
+          <li id="start-step">Open an SR</li>
           <li class="txt2"><img id="start-step-icon" src=""/></li>
         </ul>
       </div>
@@ -332,7 +387,7 @@ window.event.cancelBubble = true;
         <ul>
           <li class="txt1">&nbsp;</li>
           <li class="txt1">&nbsp;</li>
-          <li id="fixing-step">AR status</li>
+          <li id="fixing-step">SR status</li>
           <li class="txt2"><img id="fixing-step-icon" src=""/></li>
         </ul>
       </div>
