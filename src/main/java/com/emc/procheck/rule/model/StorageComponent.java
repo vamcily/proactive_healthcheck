@@ -47,7 +47,21 @@ public class StorageComponent {
 		if (this.actions == null) {
 			this.actions = new ArrayList<String>();
 		}
-		this.actions.addAll(actions);
+		
+		for (String action : actions) {
+			if (!this.actions.contains(action)) {
+				this.actions.add(action);
+			}
+		}
+		
+		if (this.actions.size() > 1)
+		{
+			for (int i = 0; i < this.actions.size(); i++) {
+				if (this.actions.get(i).equals("Fixed")) {
+					this.actions.remove(i);
+				}
+			}
+		}
 	}
 	
 	public List<StorageComponent> getChildren() {
