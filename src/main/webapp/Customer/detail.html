@@ -17,7 +17,6 @@
   <script type="text/javascript" src="jquery.tipsy.js"></script>
   <script type="text/javascript" src="../scripts/geturl.js"></script>
   <script type="text/javascript" src="../scripts/progressbar.js"></script>
-  <script type="text/javascript" src="../scripts/drag.js"></script>
   <style type="text/css">
 
 .node circle {
@@ -184,7 +183,9 @@ function update(source) {
       .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
       .on("click", function(d) { toggle(d); update(d); });
 
-  nodeEnter.append("svg:circle");
+  nodeEnter.append("svg:circle")
+      .on("mouseover",function(){d3.select(this).attr("r",parseInt(this.getAttribute("r"))+3);})
+      .on("mouseout", function(){d3.select(this).attr("r",parseInt(this.getAttribute("r"))-3);});
       //.attr("r", 1e-6)
       //.style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 

@@ -4,7 +4,7 @@
     refreshPositions: true  
 }); 
 */
-function clickAction(serialNumber) {	
+function clickAction(serialNumber) {
 	$("#myModal").draggable();
 	$("#myModal").modal({
 		backdrop: false
@@ -20,10 +20,52 @@ function setLoadIcon() {
 }
 
 function completeFix() {
-	setCompleteIcon(clickedImage);
+	//setCompleteIcon(clickedImage);
+	$.ajax({
+		type: "GET",
+		url: qUrl,
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: function(data) {
+			updateData(data);
+			//root = data;
+			update(root);
+		},
+		error: function(msg) {
+			alert(msg);
+		}
+	});
 }
 
-function setCompleteIcon(me) {
+function updateData(data) {
+	root.score = data.score;
+	root.actions = data.actions;
+	for (var i in root.children) {
+		updateScoreActions(root.children[i], data.children[i]);
+		if (root.children[i].children) {
+			for (var j in root.children[i].children) {
+				updateScoreActions(root.children[i].children[j], data.children[i].children[j]);
+			}
+		} else if (root.children[i]._children) {
+			for (var j in root.children[i]._children) {
+				updateScoreActions(root.children[i]._children[j], data.children[i].children[j]);
+			}
+		}
+	}
+}
+
+function updateScoreActions(d,ad){
+	d.score = ad.score;
+	if(d.actions)
+		d.actions = ad.actions;
+}
+
+
+// Initialize the display to show a few nodes.
+// dingj2
+//root.children.forEach(toggleAll);
+
+/*function setCompleteIcon(me) {
 	d3.select(me).attr("xlink:href", function(d) {
 		return "check-icon.png";
 	});
@@ -47,7 +89,7 @@ function setCompleteIcon(me) {
 	}
 
 	update(root);
-}
+}*/
 
 /*
 function  upgradeScore(me){
@@ -78,6 +120,7 @@ function  upgradeScore(me){
   }
 }
 */
+/*
 function changeScoreJson(data) {
 	data.score = 100;
 	if (data.actions != null)
@@ -130,7 +173,7 @@ function updateParentScore(data) {
 	}
 }
 
-
+*/
 
 //LUN faulted fix process
 function clickActionConfiguration() {
@@ -143,13 +186,13 @@ function clickActionConfiguration() {
 }
 
 function confirmOpenSR() {
-	
-    fUrl = "../fixComponent?serialNumber=" + serialNumber + "&component=Disk&tid=emc";
-    
-    $.ajax({
-      type: "GET",
-      url: fUrl
-    });
+
+	fUrl = "../fixComponent?serialNumber=" + serialNumber + "&component=Disk&tid=emc";
+
+	$.ajax({
+		type: "GET",
+		url: fUrl
+	});
 
 	var recommendAction = $("#recommend-action"),
 		fixProcess = $("#process"),
@@ -195,15 +238,14 @@ function confirmOpenSR() {
 		finishStepIcon.attr("src", "complete-icon.png");
 		finishStepIcon.css("height", "15px");
 
-		completeLunFix();
-		window.location.reload(false); 
+		completeFix();
+		//completeLunFix();
+		//window.location.reload(false);
 	}, 8000);
-
-
 }
 
 
-function completeLunFix(){
+/*function completeLunFix() {
 	d3.select(clickedImage).attr("xlink:href", function(d) {
 		return "check-icon.png";
 	});
@@ -227,4 +269,4 @@ function completeLunFix(){
 	}
 
 	update(root);
-}
+}*/
