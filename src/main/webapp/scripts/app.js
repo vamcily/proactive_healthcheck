@@ -200,11 +200,14 @@ function confirmOpenSR() {
 		startStepIcon = $("#start-step-icon"),
 		fixingStep = $("#fixing-step"),
 		fixingStepIcon = $("#fixing-step-icon"),
+		fixingProgress = $("#fixing-progress"),
 		finishStep = $("#finish-step"),
-		finishStepIcon = $("#finish-step-icon");
+		finishStepIcon = $("#finish-step-icon"),
+		proceStartIcon=$(".start"),
+		proceDoneIcon=$(".done");
 
 	window.open("http://support.emc.com");
-	setLoadIcon();
+	//setLoadIcon();
 
 	setTimeout(function() {
 		recommendAction.hide();
@@ -222,9 +225,13 @@ function confirmOpenSR() {
 		startStep.css("font-weight", "normal");
 		startStepIcon.attr("src", "complete-icon.png");
 		startStepIcon.css("height", "15px");
+		proceStartIcon.css("background","url('proce-icon.png') no-repeat");
+		proceStartIcon.css("background-size","contain");
 
 		fixingStep.css("font-weight", "bold");
-		fixingStepIcon.attr("src", "loading-icon.gif");
+		//fixingStepIcon.attr("src", "loading-icon.gif");
+		fixingProgress.text("In Progress");
+		fixingProgress.css("font-weight", "bold");
 		fixingStepIcon.css("height", "15px");
 
 	}, 6000);
@@ -232,8 +239,12 @@ function confirmOpenSR() {
 	setTimeout(function fixed() {
 		//startStep.css("font-weight", "bold");
 		fixingStep.css("font-weight", "normal");
-		fixingStepIcon.attr("src", "complete-icon.png");
-		fixingStepIcon.css("height", "15px");
+		fixingProgress.text("");
+		var imgHtml = "<img src=\"complete-icon.png\"  style=\"height:15px\"/>";
+		fixingProgress.append(imgHtml);
+
+		proceDoneIcon.css("background","url('proce-icon.png') no-repeat");
+		proceDoneIcon.css("background-size","contain");
 
 		finishStepIcon.attr("src", "complete-icon.png");
 		finishStepIcon.css("height", "15px");
@@ -241,7 +252,7 @@ function confirmOpenSR() {
 		completeFix();
 		//completeLunFix();
 		//window.location.reload(false);
-	}, 8000);
+	}, 80000);
 }
 
 
