@@ -225,7 +225,7 @@ function confirmOpenSR() {
 		startStep.css("font-weight", "normal");
 		startStepIcon.attr("src", "complete-icon.png");
 		startStepIcon.css("height", "15px");
-		proceStartIcon.css("background","url('proce-icon.png') no-repeat");
+		proceStartIcon.css("background","url('proce-icon2.png') no-repeat");
 		proceStartIcon.css("background-size","contain");
 
 		fixingStep.css("font-weight", "bold");
@@ -243,7 +243,7 @@ function confirmOpenSR() {
 		var imgHtml = "<img src=\"complete-icon.png\"  style=\"height:15px\"/>";
 		fixingProgress.append(imgHtml);
 
-		proceDoneIcon.css("background","url('proce-icon.png') no-repeat");
+		proceDoneIcon.css("background","url('proce-icon2.png') no-repeat");
 		proceDoneIcon.css("background-size","contain");
 
 		finishStepIcon.attr("src", "complete-icon.png");
@@ -252,7 +252,7 @@ function confirmOpenSR() {
 		completeFix();
 		//completeLunFix();
 		//window.location.reload(false);
-	}, 80000);
+	}, 200000);
 }
 
 
