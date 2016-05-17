@@ -50,7 +50,7 @@
     background-size: cover;
 }
  
- ol,ul {
+ ol,.disk-ul {
     list-style: none;
 }
 
@@ -61,7 +61,7 @@
     text-align: center;
 }
 
-.node, ul {
+.node, .disk-ul {
 	position: relative;
 	z-index: 1;
 	width: 90px;
@@ -138,4 +138,8 @@
 
 .lun-modal-body {
 	overflow: hidden;
+}
+
+.install-steps {
+	color: #C0C0C0;
 }

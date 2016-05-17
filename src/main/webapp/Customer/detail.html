@@ -86,10 +86,11 @@ path.link {
   </tr>
 </table>
 <div id="body">
-<!--   <div id="footer">
-    System Health Status
-    <div class="hint">click or option-click to expand or collapse</div>
-  </div> -->
+  <!--   <div id="footer">
+  System Health Status
+  <div class="hint">click or option-click to expand or collapse</div>
+</div>
+-->
 </div>
 <script type="text/javascript">
 var m = [50, 120, 50, 120],
@@ -120,23 +121,23 @@ $.ajax({
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: function (data) {
-    	  root = data;
-    	  root.x0 = h / 2;
-    	  root.y0 = 0;
+        root = data;
+        root.x0 = h / 2;
+        root.y0 = 0;
 
-    	  function toggleAll(d) {
-    	    if (d.children) {
-    	      d.children.forEach(toggleAll);
-    	      toggle(d);
-    	    }
-    	  }
+        function toggleAll(d) {
+          if (d.children) {
+            d.children.forEach(toggleAll);
+            toggle(d);
+          }
+        }
 
-    	  // Initialize the display to show a few nodes.
-    	  // dingj2
-    	  root.children.forEach(toggleAll);
-    	  //toggle(root.children[3]);
+        // Initialize the display to show a few nodes.
+        // dingj2
+        root.children.forEach(toggleAll);
+        //toggle(root.children[3]);
 
-    	  update(root);
+        update(root);
     },
     error: function (msg) {
        alert(msg);
@@ -215,13 +216,13 @@ function update(source) {
 
   nodeEnter.append("svg:image")
       .attr("xlink:href", function(d) {
-	    	  if (d.parent !=null && d.parent.score==100) 
-	    		  return "check-icon.png"; 
-	    	  else if (d.actions && d.actions[0]=="Fixed") return "check-icon.png"; 
-	    	  else if (d.name=="Hardware" || d.name=="Disk") return "catalog-icon.png"; 
-	    	  else if (d.name=="Upgrading" || d.name=="Software") return "service-icon.png"; 
-	    	  else return null; 
-    	  })
+          if (d.parent !=null && d.parent.score==100) 
+            return "check-icon.png"; 
+          else if (d.actions && d.actions[0]=="Fixed") return "check-icon.png"; 
+          else if (d.name=="Hardware" || d.name=="Disk") return "catalog-icon.png"; 
+          else if (d.name=="Upgrading" || d.name=="Software") return "service-icon.png"; 
+          else return null; 
+        })
       .attr("x", function(d){if (d.depth==0) return 20; else if (d.depth==1) return 11; else return 8;})
       .attr("y", function(d){if (d.depth==0) return -45; else if (d.depth==1) return -40; else return -35;})
       .attr("width", "30px")
@@ -229,13 +230,13 @@ function update(source) {
       .attr("id",function(d){ if(d.actions!=null) return "image"+d.depth; })
       .style("display",function(d){ return d.actions==null ? "none" : "block"})
       .on("click",function(d) { 
-    	  	stopBubble(this.id); 
-    	  	clickedImage= this; 
-    	  	if(d.name=="Hardware" || d.name=="Disk") 
-    	  		clickActionConfiguration(); 
-    	  	else if (d.name=="Upgrading" || d.name=="Software")
-    	  		clickAction(serialNumber);
-    	  });//var val=confirm("Do you want to fix the issues?"); if(val) openwin(); });
+          stopBubble(this.id); 
+          clickedImage= this; 
+          if(d.name=="Hardware" || d.name=="Disk") 
+            clickActionConfiguration(); 
+          else if (d.name=="Upgrading" || d.name=="Software")
+            clickAction(serialNumber);
+        });//var val=confirm("Do you want to fix the issues?"); if(val) openwin(); });
 
   // dingj2 tipsy
   $('svg g').tipsy({ 
@@ -263,13 +264,13 @@ function update(source) {
 
   nodeUpdate.select("image")
       .attr("xlink:href", function(d) {
-    	  if (d.parent !=null && d.parent.score==100) 
-    		  return "check-icon.png"; 
-    	  else if (d.actions && d.actions[0]=="Fixed" && d.score==100) return "check-icon.png"; 
-    	  else if (d.name=="Hardware" || d.name=="Disk") return "catalog-icon.png"; 
-    	  else if (d.name=="Upgrading" || d.name=="Software") return "service-icon.png"; 
-    	  else return null; 
-	  });
+        if (d.parent !=null && d.parent.score==100) 
+          return "check-icon.png"; 
+        else if (d.actions && d.actions[0]=="Fixed" && d.score==100) return "check-icon.png"; 
+        else if (d.name=="Hardware" || d.name=="Disk") return "catalog-icon.png"; 
+        else if (d.name=="Upgrading" || d.name=="Software") return "service-icon.png"; 
+        else return null; 
+    });
 
   // Transition exiting nodes to the parent's new position.
   var nodeExit = node.exit().transition()
@@ -331,87 +332,103 @@ function toggle(d) {
 }
 
 function stopBubble(e) { 
-	if (e && e.stopPropagation) {//非IE浏览器 
-	　　e.stopPropagation(); 
-	} 
-	else {//IE浏览器 
-		window.event.cancelBubble = true; 
-	} 
+  if (e && e.stopPropagation) {//非IE浏览器 
+  　　e.stopPropagation(); 
+  } 
+  else {//IE浏览器 
+    window.event.cancelBubble = true; 
+  } 
 }
 </script>
 
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Update Status</h3>
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Update Status</h3>
+</div>
+<div class="modal-body" id="upgrade-modal-body">
+  <div id="progressbar" style="display: none;">
+    <div class="progress-label">Loading</div>
   </div>
-  <div class="modal-body">
-    <div id="progressbar" style="display: none;">
-      <div class="progress-label">Loading</div>
+  <div>
+    <div id="stepTitle2">
+      <div id="stepTitle"><B>Ready to Upgrade</B></div>
+      <ul id="upgrade-steps" style="display:none">
+        <li class="install-steps" id="step1">Download Packages</li>
+        <li class="install-steps" id="step2">Installing Software On Peer SP</li>
+        <li class="install-steps" id="step3">Reboot Peer SP</li>
+        <li class="install-steps" id="step4">Installing Software on Primary SP</li>
+        <li class="install-steps" id="step5">Reboot Primary SP</li>
+        <li id="step6" style="display: none; list-style: none;">All Steps Complete!</li>
+      </ul>
     </div>
-    <div>
-      <div id="stepTitle">
-        <B>Ready to Upgrade</B>
-      </div>
-      <div class="progress-content"></div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="confirmBtn" onClick="confirmUpgrade()" >Confirm</button>
-    <button class="closeBtn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <div class="progress-content"></div>
   </div>
 </div>
+<div class="modal-footer">
+  <button class="confirmBtn" onClick="confirmUpgrade()" >Confirm</button>
+  <button class="closeBtn" data-dismiss="modal" aria-hidden="true">Close</button>
+</div>
+</div>
 <div id="myLunModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Recommended Actions</h3>
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="myModalLabel">Recommended Actions</h3>
+</div>
+<div class="modal-body lun-modal-body">
+  <div id="recommend-action">
+    <B>
+      There is faulted Disk. Please click on the "Open SR" button to create an SR.
+    </B>
   </div>
-  <div class="modal-body lun-modal-body">
-      <div id="recommend-action">
-        <B>There is faulted Disk. Please click on the "Open SR" button to create an SR.</B>
-      </div>
-    <div id="process" class = "order-process" style="display: none">
-      <div class="node ready"> <i class="icon-start"></i>
-        <ul>
-          <li class="txt1">&nbsp;</li>
-          <li class="txt1">&nbsp;</li>
-          <li id="start-step">Open an SR</li>
-          <li class="txt2"><img id="start-step-icon" src=""/></li>
-        </ul>
-      </div>
-      <div class="proce start">
-        <ul>
-          <li class="txt1"></li>
-        </ul>
-      </div>
-      <div class="node fixing"> <i class="icon-fixing"></i>
-        <ul>
-          <li class="txt1">&nbsp;</li>
-          <li class="txt1">&nbsp;</li>
-          <li id="fixing-step">SR status</li>
-          <li id="fixing-progress"><img id="fixing-step-icon" src=""/></li>
-        </ul>
-      </div>
-      <div class="proce done">
-        <ul>
-          <li class="txt1"></li>
-        </ul>
-      </div>
-      <div class="node fixed">
-        <i class="icon-fixed"></i>
-        <ul>
-          <li class="txt1">&nbsp;</li>
-          <li class="txt1">&nbsp;</li>
-          <li id="finish-step">Finish</li>
-          <li class="txt2"><img id="finish-step-icon" src=""/></li>
-        </ul>
-      </div>
+  <div id="process" class = "order-process" style="display: none">
+    <div class="node ready"> <i class="icon-start"></i>
+      <ul class="disk-ul">
+        <li class="txt1">&nbsp;</li>
+        <li class="txt1">&nbsp;</li>
+        <li id="start-step">Open an SR</li>
+        <li class="txt2">
+          <img id="start-step-icon" src=""/>
+        </li>
+      </ul>
+    </div>
+    <div class="proce start">
+      <ul class="disk-ul">
+        <li class="txt1"></li>
+      </ul>
+    </div>
+    <div class="node fixing"> <i class="icon-fixing"></i>
+      <ul class="disk-ul">
+        <li class="txt1">&nbsp;</li>
+        <li class="txt1">&nbsp;</li>
+        <li id="fixing-step">SR status</li>
+        <li id="fixing-progress">
+          <img id="fixing-step-icon" src=""/>
+        </li>
+      </ul>
+    </div>
+    <div class="proce done">
+      <ul class="disk-ul">
+        <li class="txt1"></li>
+      </ul>
+    </div>
+    <div class="node fixed">
+      <i class="icon-fixed"></i>
+      <ul class="disk-ul">
+        <li class="txt1">&nbsp;</li>
+        <li class="txt1">&nbsp;</li>
+        <li id="finish-step">Finish</li>
+        <li class="txt2">
+          <img id="finish-step-icon" src=""/>
+        </li>
+      </ul>
     </div>
   </div>
-  <div class="modal-footer">
+</div>
+<div class="modal-footer">
   <button class="confirm-lun-btn" onClick="confirmOpenSR()" >Open SR</button>
-    <button class="closeBtn" data-dismiss="modal" aria-hidden="true">Close</button>
-  </div>
+  <button class="closeBtn" data-dismiss="modal" aria-hidden="true">Close</button>
+</div>
 
 </div>
 </body>
