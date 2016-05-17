@@ -11,7 +11,10 @@ function confirmUpgrade() {
     step5 = $("#step5"),
     step6 = $("#step6"),
     myModal = $("#myModal"),
-    modalBody = $("#upgrade-modal-body");
+    modalBody = $("#upgrade-modal-body"),
+    confirmLabel = $("#myModalLabel");
+
+    confirmLabel.text("Upgrade Status")
 
      fUrl = "../fixComponent?serialNumber=" + serialNumber + "&component=Software&tid=emc";
     
