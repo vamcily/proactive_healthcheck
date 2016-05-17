@@ -32,13 +32,13 @@
 
 path.link {
   fill: none;
-  stroke: #ccc;
+  stroke: #808080; /*#ccc*/
   stroke-width: 1.5px;
 }
 
     </style>
 </head>
-<body>
+<body style="overflow: hidden;">
   <h3 id="system"></h3>
   <script>
          document.getElementById("system").innerHTML = "System Name: "+ GetQueryString("serialNumber");
@@ -94,8 +94,8 @@ path.link {
 </div>
 <script type="text/javascript">
 var m = [50, 120, 50, 120],
-    w = 1680 - m[1] - m[3],   // dingj2 tree size
-    h = 1050 - m[0] - m[2],
+    w = 1680 - m[1] - m[3],   // dingj2 tree size 1680
+    h = 1050 - m[0] - m[2],    //1050
     i = 0,
     clickedImage,
     root;
@@ -194,9 +194,9 @@ function update(source) {
       //.attr("x", function(d) { return d.children || d._children ? -10 : 10; })
       //.attr("dy", ".35em")
       //.attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-      .attr("dx", function(d){if (d.depth==0) return 32; else if (d.depth==1) return 22; else return -2.5*d.name.length;})
+      .attr("dx", function(d){if (d.depth==0) return 36; else if (d.depth==1) return 27; else return -2.5*d.name.length;})
       .attr("dy", function(d){if (d.depth==0) return 10; else if (d.depth==1) return 4; else return 30;})
-      .style("font-size", function(d){if (d.depth==0) return 25;})
+      .style("font-size", function(d){if (d.depth==0) return 25; else if(d.depth==1) return 13;})
       .style("fill", "steelblue")
       .text(function(d) { return d.name; })
       .style("fill-opacity", 1e-6)
@@ -223,10 +223,10 @@ function update(source) {
           else if (d.name=="Upgrading" || d.name=="Software") return "service-icon.png"; 
           else return null; 
         })
-      .attr("x", function(d){if (d.depth==0) return 20; else if (d.depth==1) return 11; else return 8;})
-      .attr("y", function(d){if (d.depth==0) return -45; else if (d.depth==1) return -40; else return -35;})
-      .attr("width", "30px")
-      .attr("height", "30px")
+      .attr("x", function(d){if (d.depth==0) return 20; else if (d.depth==1) return 19; else return 8;})
+      .attr("y", function(d){if (d.depth==0) return -45; else if (d.depth==1) return -35; else return -35;})
+      .attr("width", "20px")
+      .attr("height", "20px")
       .attr("id",function(d){ if(d.actions!=null) return "image"+d.depth; })
       .style("display",function(d){ return d.actions==null ? "none" : "block"})
       .on("click",function(d) { 
@@ -253,7 +253,7 @@ function update(source) {
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });  //dingj2 exchange x and y
 
   nodeUpdate.select("circle")
-      .attr("r", function(d){if (d.depth==0) return 30; else if (d.depth==1) return 20; else return 15;})  // dingj2 circle radius .attr("r", 4.5)
+      .attr("r", function(d){if (d.depth==0) return 36; else if (d.depth==1) return 26; else return 20;})  // dingj2 d.depth==0:30 d.depth==1 20 else 15
       .style("fill", function(d) { if(d.parent !=null && d.parent.score==100 ) return "#8BC34A"; else if (d.score >= 90) return "#8BC34A"; else if (d.score >= 80) return "#FFEB3B"; else return "#F44336";});
 
   nodeUpdate.select("text")
@@ -352,7 +352,9 @@ function stopBubble(e) {
   </div>
   <div>
     <div id="stepTitle2">
-      <div id="stepTitle"><B>Ready to Upgrade</B></div>
+      <div id="stepTitle">
+      The latest software is available for your system.Click <B>"Confirm"</B> to begin the installation.
+      </div>
       <ul id="upgrade-steps" style="display:none">
         <li class="install-steps" id="step1">Download Packages</li>
         <li class="install-steps" id="step2">Installing Software On Peer SP</li>
@@ -377,9 +379,7 @@ function stopBubble(e) {
 </div>
 <div class="modal-body lun-modal-body">
   <div id="recommend-action">
-    <B>
-      There is faulted Disk. Please click on the "Open SR" button to create an SR.
-    </B>
+    There is faulted Disk. Please click on the <B>"Open SR"</B> button to create an SR.
   </div>
   <div id="process" class = "order-process" style="display: none">
     <div class="node ready"> <i class="icon-start"></i>
